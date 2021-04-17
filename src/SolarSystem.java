@@ -11,6 +11,8 @@ public class SolarSystem {
         Body Mars = new Body("Mars",0,0,0.642e24,6.792e7,2.066e11,2.492e11,687.0,24.6);
         Body Jupiter = new Body("Jupiter",0,0,1898e24,1.42984e8,7.405e11,8.166e11,4331,9.9);
         Body Saturn = new Body("Saturn",0,0,568e24,1.20536e8,1.3526e12,1.5145e12	,10747,10.7);
+        Body Uranus = new Body("Uranus",0,0,86.8e24,5.1118e7,2.7413e12,3.0036e12,30589,-17.2);
+        Body Neptune = new Body("Neptune",0,0,102e24,4.9528e7,4.4445e12,4.5457e12,59800,16.1);
         // add a list of planets
         List<Body> bodies = new ArrayList<>();
         bodies.add(Sun);
@@ -20,6 +22,8 @@ public class SolarSystem {
         bodies.add(Mars);
         bodies.add(Jupiter);
         bodies.add(Saturn);
+        bodies.add(Uranus);
+        bodies.add(Neptune);
         // initial position of planets
         for (Body b: bodies) {
             b.initialPosition();

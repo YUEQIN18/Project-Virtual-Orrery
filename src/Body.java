@@ -4,10 +4,10 @@ public class Body {
     String name;
     double x;
     double y;
-    double mass;
-    double diam;
-    double perihelion;
-    double aphelion;
+    double mass; // (kg)
+    double diam; // (meters)
+    double perihelion; // (meters)
+    double aphelion; // (meters)
     double orbPeriod; // (days)
     double rotationalPeriod; // (hours)
     // constructor
