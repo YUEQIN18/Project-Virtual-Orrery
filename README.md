@@ -7,7 +7,7 @@
 
 #### Contributor: Yue Qin
 
-Added Body.java with base parameters and its constructors.
+Added [Body.java](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/src/Body.java) with base parameters and its constructors.
 
     public Body(){
         ...
@@ -19,7 +19,7 @@ Added a function to initialize position of planets.
         ...
     }
 
-Added SolarSystem.java(https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/src/SolarSystem.java) and its constructor. Initialize eight planets
+Added [SolarSystem.java](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/src/SolarSystem.java) and its constructor. Initialize eight planets
 of parameters from https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html
 
     public SolarSystem(){
