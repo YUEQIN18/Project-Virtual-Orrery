@@ -2,8 +2,11 @@
 ## Simulate a solar system in 3D
 
 ###[2021-04-17] 
+
 ####Version: 1.0.1
+
 ####Contributor: Yue Qin
+
 Added Body.class with base parameters and its constructors.
 
     public Body(){
