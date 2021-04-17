@@ -1,11 +1,11 @@
 # Project: Virtual Orrery
 ## Simulate a solar system in 3D
 
-###[2021-04-17] 
+### [2021-04-17] 
 
-####Version: 1.0.1
+#### Version: 1.0.1
 
-####Contributor: Yue Qin
+#### Contributor: Yue Qin
 
 Added Body.class with base parameters and its constructors.
 
