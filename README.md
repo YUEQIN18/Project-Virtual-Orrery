@@ -25,3 +25,9 @@ of parameters from https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html
     public SolarSystem(){
         ...
     }
+
+
+4/20/20 
+
+Created 3D space.
+Added Star background to space. 
