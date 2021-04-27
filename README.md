@@ -27,7 +27,22 @@ of parameters from https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html
     }
 
 
-4/20/20 
-
+### [2021-04-20] 
+  
+#### Version: 1.0.2
+  
 Created 3D space.
 Added Star background to space. 
+
+### [2021-04-26]   
+  
+#### Version: 1.0.3  
+  
+Added [Star.pde]  
+Added [Field_of_Stars.pde]  
+Added [Main.pde]  
+Added [Planet.pde]  
+
+Light manipulation, time scale manipulation, and planetary motion perfecting implementation is next!  
+
+
