@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SolarSystem {
+    public List<Body> bodies;
     public SolarSystem(){
         // add planets
         Body Sun = new Body("Sun",0,0,1.9891e30,1.391684e9,0,0,587.28,0);
@@ -14,7 +15,7 @@ public class SolarSystem {
         Body Uranus = new Body("Uranus",0,0,86.8e24,5.1118e7,2.7413e12,3.0036e12,30589,-17.2);
         Body Neptune = new Body("Neptune",0,0,102e24,4.9528e7,4.4445e12,4.5457e12,59800,16.1);
         // add a list of planets
-        List<Body> bodies = new ArrayList<>();
+        bodies = new ArrayList<>();
         bodies.add(Sun);
         bodies.add(Mercury);
         bodies.add(Venus);
