@@ -10,8 +10,11 @@ class Body {
     float orbPeriod; // (days)
     float rotationalPeriod; // (hours)
     float currentAngle; // (radian)
+    PShape globe;
+    int radiusLevel = 500;
+    int coordinateLevel = 10000;
     // constructor
-    Body(String name, float x, float y, float m, float diam, float perihelion, float aphelion, float orbPeriod, float rotationalPeriod){
+    Body(String name, float x, float y, float m, float diam, float perihelion, float aphelion, float orbPeriod, float rotationalPeriod, PImage img){
         this.name = name;
         this.x = x;
         this.y = y;
@@ -23,15 +26,18 @@ class Body {
         this.orbPeriod = orbPeriod;
         this.rotationalPeriod = rotationalPeriod;
         currentAngle = 0;
+        noStroke();
+        noFill();
+        globe = createShape(SPHERE, diam/(2*radiusLevel*radiusLevel));
+        globe.setTexture(img);
     }
     void display(){
-        int radiusLevel = 1000;
-        int coordinateLevel = 5000;
+        
         pushMatrix();
         noStroke();
         translate(x/(coordinateLevel*coordinateLevel),y/(coordinateLevel*coordinateLevel),z/(coordinateLevel*coordinateLevel));
         fill(255);
-        sphere(diam/(2*radiusLevel*radiusLevel));
+        shape(globe);
         popMatrix();
     }
     void initialPosition(){
