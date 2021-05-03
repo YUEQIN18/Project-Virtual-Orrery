@@ -60,8 +60,11 @@ Light manipulation, time scale manipulation, and planetary motion perfecting imp
 Contributor: Abhinandan Ashok Nuli
 
 Added StarField
+
 Added 2D objects
+
 Added 3D objects
+
 Added 3D textures
 
 
