@@ -57,6 +57,13 @@ Added [Planet.pde]
 
 Light manipulation, time scale manipulation, and planetary motion perfecting implementation is next!  
 
+Contributor: Abhinandan Ashok Nuli
+
+Added StarField
+Added 2D objects
+Added 3D objects
+Added 3D textures
+
 
 ### [2021-04-29]
 
