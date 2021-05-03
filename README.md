@@ -1,6 +1,6 @@
 # Project: Virtual Orrery
 ## Simulate a solar system in 3D
-
+## Group Member : [AbhinandanNuli](https://github.com/AbhinandanNuli), [William Baltus](https://github.com/WilliamBaltus), [Yue Qin](https://github.com/YUEQIN18)
 ### Directory Structure
 
 ├── Project-Virtual-Orrery   
