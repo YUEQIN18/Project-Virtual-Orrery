@@ -4,7 +4,7 @@
 ### Directory Structure
 
 ├── Project-Virtual-Orrery   
-│  ├── main   : Main.pde is the file could run.  
+│  ├── main   : [Main.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/main/Main.pde) is the file could run.  
 │  └── src    : source code
 
 
