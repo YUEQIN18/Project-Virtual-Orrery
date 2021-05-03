@@ -3,6 +3,8 @@ PImage sunTexture,mercuryT,venusT,earthT,moonT,marsT,jupiterT,saturnT,uranusT,ne
 Body Sun,Mercury,Venus,Earth,Moon,Mars,Jupiter,Saturn,Uranus,Neptune,Pluto;
 
 PeasyCam cam;
+cam.setMinimumDistance(600);
+cam.setMaximumDistance(5000);
 
 void setup(){
   size(2400,1200, P3D ); //<>//
