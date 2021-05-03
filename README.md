@@ -103,3 +103,14 @@ added [2D_3D_Textures.pde] and [SolarSystem_2D_3D_Texture.pde].
 Added all picture to /main/data
 
 Modified [Main.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/main/Main.pde) and added textures to all celestial body, they look more real now.
+
+
+### [2021-05-03]
+
+#### Version: 1.0.7
+
+#### Contributor: William Baltus  
+
+Added lights such that it seems they are originating from sun object.  
+Camera max and min distance set. 
+Working on time scale manipulation
