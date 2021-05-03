@@ -4,7 +4,7 @@
 ### Directory Structure
 
 ├── Project-Virtual-Orrery   
-│  ├── main   : Processing file could run  
+│  ├── main   : Main.pde is the file could run.  
 │  └── src    : source code
 
 
