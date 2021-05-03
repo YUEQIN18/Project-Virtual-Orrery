@@ -41,8 +41,7 @@ void setup(){
 }
 
 void draw(){
-  background(0);
-  lights();
+  pointLight(255, 255, 255, 0, 0, 0); //for the normal behaviour of the sun light 
   int timestep = 10000;
   Mercury.setPosition(timestep);
   Venus.setPosition(timestep);
@@ -52,7 +51,6 @@ void draw(){
   Saturn.setPosition(timestep);
   Uranus.setPosition(timestep);
   Neptune.setPosition(timestep);
-  Sun.display();
   Mercury.display();
   Venus.display();
   Earth.display();
@@ -61,4 +59,6 @@ void draw(){
   Saturn.display();
   Uranus.display();
   Neptune.display();
+  ambientLight(255, 255, 255, 0, 0, 0); //ambientLight in the center of the sun
+  Sun.display();
  }
