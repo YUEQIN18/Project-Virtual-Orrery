@@ -1,10 +1,13 @@
 import peasy.*;
-PImage sunTexture,mercuryT,venusT,earthT,moonT,marsT,jupiterT,saturnT,uranusT,neptuneT;
+PImage starBackground,sunTexture,mercuryT,venusT,earthT,moonT,marsT,jupiterT,saturnT,uranusT,neptuneT;
 Body Sun,Mercury,Venus,Earth,Moon,Mars,Jupiter,Saturn,Uranus,Neptune,Pluto;
 PeasyCam cam;
 CameraState state;
 
 int timestep = 10000;
+int radiusLevel = 500;
+int coordinateLevel = 10000;
+
 void setup(){
   size(2400,1200, P3D ); //<>//
   noStroke();
@@ -17,6 +20,8 @@ void setup(){
   saturnT = loadImage("saturn.jpg");
   uranusT = loadImage("uranus.jpg");
   neptuneT = loadImage("neptune.jpg");
+  starBackground = loadImage("stars.jpg");
+  starBackground.resize(width, height);
   
   Sun = new Body("Sun",0,0,1.9891e30,1.391684e9/6,0,0,587.28,0,sunTexture);
   Mercury = new Body("Mercury",0,0,0.330e24,4.879e6,4.6e10,6.98e10,88,1407.6,mercuryT);
@@ -104,7 +109,7 @@ void keyPressed() {
 }
 
 void draw(){
-  background(0);
+  background(starBackground);
   pointLight(255, 255, 255, 0, 0, 0); //for the normal behaviour of the sun light 
   Mercury.setPosition(timestep);
   Venus.setPosition(timestep);

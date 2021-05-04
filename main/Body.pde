@@ -11,8 +11,6 @@ class Body {
     float rotationalPeriod; // (hours)
     float currentAngle; // (radian)
     PShape globe;
-    int radiusLevel = 500;
-    int coordinateLevel = 10000;
     boolean info;
     // constructor
     Body(String name, float x, float y, float m, float diam, float perihelion, float aphelion, float orbPeriod, float rotationalPeriod, PImage img){
@@ -36,9 +34,12 @@ class Body {
     void display(){
         pushMatrix();
         noStroke();
+        rotateX(-PI/4); // change the cam view and make cam more comfortable
         translate(x/(coordinateLevel*coordinateLevel),y/(coordinateLevel*coordinateLevel),z/(coordinateLevel*coordinateLevel));
         fill(255);
+        rotateX(-PI/2); // rotate each planet to right angle
         shape(globe);
+        
         popMatrix();
         if(info == true){
           cam.beginHUD();   

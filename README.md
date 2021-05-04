@@ -133,3 +133,7 @@ Added HUD feature and camera movement shortcut key for presentation.
     Press 7 camera will move to Saturn
     Press 8 camera will move to Uranus
     Press 9 camera will move to Neptune
+
+Added a galaxy picture as background .
+
+Changed all textures of planets. New textures file come from https://www.solarsystemscope.com/textures/.
