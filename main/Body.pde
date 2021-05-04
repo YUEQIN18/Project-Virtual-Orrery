@@ -34,7 +34,7 @@ class Body {
     void display(){
         pushMatrix();
         noStroke();
-        rotateX(-PI/4); // change the cam view and make cam more comfortable
+        rotateX(PI/4); // change the cam view and make cam more comfortable
         translate(x/(coordinateLevel*coordinateLevel),y/(coordinateLevel*coordinateLevel),z/(coordinateLevel*coordinateLevel));
         fill(255);
         rotateX(-PI/2); // rotate each planet to right angle
