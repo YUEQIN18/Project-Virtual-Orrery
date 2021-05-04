@@ -13,6 +13,7 @@ class Body {
     PShape globe;
     int radiusLevel = 500;
     int coordinateLevel = 10000;
+    boolean info;
     // constructor
     Body(String name, float x, float y, float m, float diam, float perihelion, float aphelion, float orbPeriod, float rotationalPeriod, PImage img){
         this.name = name;
@@ -26,20 +27,32 @@ class Body {
         this.orbPeriod = orbPeriod;
         this.rotationalPeriod = rotationalPeriod;
         currentAngle = 0;
+        info = false;
         noStroke();
         noFill();
         globe = createShape(SPHERE, diam/(2*radiusLevel*radiusLevel));
         globe.setTexture(img);
     }
     void display(){
-        
         pushMatrix();
         noStroke();
         translate(x/(coordinateLevel*coordinateLevel),y/(coordinateLevel*coordinateLevel),z/(coordinateLevel*coordinateLevel));
         fill(255);
         shape(globe);
         popMatrix();
-    }
+        if(info == true){
+          cam.beginHUD();   
+            fill(255, 140, 0);     
+            rect(0, 60, 350, 60);   
+            fill(255);
+            textSize(40);
+            text(name, 100, 100);
+          cam.endHUD();
+        }
+    }  
+    void turnOnInfo(){
+      this.info = !this.info;
+    } 
     void initialPosition(){
         // set random x and y
         // Or we find the actual position of planet later

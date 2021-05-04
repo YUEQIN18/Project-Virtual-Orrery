@@ -57,7 +57,7 @@ Added [Planet.pde]
 
 Light manipulation, time scale manipulation, and planetary motion perfecting implementation is next!  
 
-Contributor: Abhinandan Ashok Nuli
+#### Contributor: Abhinandan Ashok Nuli
 
 Added StarField
 
@@ -114,3 +114,22 @@ Modified [Main.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/mast
 Added lights such that it seems they are originating from sun object.  
 Camera max and min distance set. 
 Working on time scale manipulation
+
+
+### [2021-05-04]
+
+#### Version: 1.0.8
+
+#### Contributor: Yue Qin
+
+Added HUD feature and camera movement shortcut key for presentation.
+
+    Press 1 camera will move to Sun
+    Press 2 camera will move to Mercury
+    Press 3 camera will move to Venus
+    Press 4 camera will move to Earth
+    Press 5 camera will move to Mars
+    Press 6 camera will move to Jupiter
+    Press 7 camera will move to Saturn
+    Press 8 camera will move to Uranus
+    Press 9 camera will move to Neptune
