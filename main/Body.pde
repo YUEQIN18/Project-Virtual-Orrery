@@ -10,6 +10,7 @@ class Body {
     float orbPeriod; // (days)
     float rotationalPeriod; // (hours)
     float currentAngle; // (radian)
+    float rotateAngle;
     PShape globe;
     boolean info;
     // constructor
@@ -25,6 +26,7 @@ class Body {
         this.orbPeriod = orbPeriod;
         this.rotationalPeriod = rotationalPeriod;
         currentAngle = 0;
+        rotateAngle = 0;
         info = false;
         noStroke();
         noFill();
@@ -34,12 +36,13 @@ class Body {
     void display(){
         pushMatrix();
         noStroke();
-        rotateX(PI/4); // change the cam view and make cam more comfortable
         translate(x/(coordinateLevel*coordinateLevel),y/(coordinateLevel*coordinateLevel),z/(coordinateLevel*coordinateLevel));
         fill(255);
-        rotateX(-PI/2); // rotate each planet to right angle
+        if(name != "Sun"){
+           rot(timestep);
+        }
+        rotateX(-PI/2); // rotate each planet to right angle for rotation
         shape(globe);
-        
         popMatrix();
         if(info == true){
           cam.beginHUD();   
@@ -79,5 +82,11 @@ class Body {
         float b = sqrt(a*a-c*c); // b is semi-minor axis
         x = a*cos(currentAngle);
         y = b*sin(currentAngle);
+
     }
+    void rot(float time){
+    //rotateY(axial_tilt);
+    rotateZ(radians(rotateAngle));
+    rotateAngle = rotateAngle + time * 360/rotationalPeriod/3600;
+  }
 }

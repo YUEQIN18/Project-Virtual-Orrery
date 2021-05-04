@@ -137,3 +137,5 @@ Added HUD feature and camera movement shortcut key for presentation.
 Added a galaxy picture as background .
 
 Changed all textures of planets. New textures file come from https://www.solarsystemscope.com/textures/.
+
+Added rot() function to calculate each rotation of planet.

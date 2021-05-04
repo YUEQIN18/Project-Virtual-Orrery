@@ -34,7 +34,7 @@ void setup(){
   Neptune = new Body("Neptune",0,0,102e24,4.9528e7,4.4445e12,4.5457e12,59800,16.1,neptuneT);
   
   cam = new PeasyCam(this,5000);
-  cam.setMinimumDistance(600);
+  cam.setMinimumDistance(500);
   cam.setMaximumDistance(8000);
 
   Sun.initialPosition();
@@ -86,17 +86,17 @@ void keyPressed() {
     Mars.turnOnInfo();
   }
   if (key == '6') {
-    cam.lookAt(Jupiter.x/(10000*10000), Jupiter.y/(10000*10000), Jupiter.z/(10000*10000),50.0,600);
+    cam.lookAt(Jupiter.x/(10000*10000), Jupiter.y/(10000*10000), Jupiter.z/(10000*10000),1000.0,600);
     timestep = 100;
     Jupiter.turnOnInfo();
   }
   if (key == '7') {
-    cam.lookAt(Saturn.x/(10000*10000), Saturn.y/(10000*10000), Saturn.z/(10000*10000),100.0,600);
+    cam.lookAt(Saturn.x/(10000*10000), Saturn.y/(10000*10000), Saturn.z/(10000*10000),1000.0,600);
     timestep = 100;
     Saturn.turnOnInfo();
   }
   if (key == '8') {
-    cam.lookAt(Uranus.x/(10000*10000), Uranus.y/(10000*10000), Uranus.z/(10000*10000),100.0,600);
+    cam.lookAt(Uranus.x/(10000*10000), Uranus.y/(10000*10000), Uranus.z/(10000*10000),200.0,600);
     timestep = 100;
     Uranus.turnOnInfo();
   }
@@ -119,6 +119,7 @@ void draw(){
   Saturn.setPosition(timestep);
   Uranus.setPosition(timestep);
   Neptune.setPosition(timestep);
+
   Mercury.display();
   Venus.display();
   Earth.display();
@@ -136,4 +137,12 @@ void draw(){
   textSize(40);
   text("Virtual Orrery", 40, 40);
   cam.endHUD();
+  //Mercury.rot();
+  //Venus.rot();
+  //Earth.rot();
+  //Mars.rot();
+  //Jupiter.rot();
+  //Saturn.rot();
+  //Uranus.rot();
+  //Neptune.rot();
  }
