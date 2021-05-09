@@ -47,7 +47,7 @@ class Body {
         if(info == true){
           cam.beginHUD();   
             fill(255, 140, 0);     
-            rect(0, 60, 350, 60);   
+            rect(0, 60, 360, 60);   
             fill(255);
             textSize(40);
             text(name, 100, 100);
