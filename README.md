@@ -162,3 +162,6 @@ Added 4x anti-aliasing to program.
 
 Changed the sketch using the full size of the computer's display.
 
+Added clickable buttons for each planet and added a button to change the timescale.
+
+Added Moon.
