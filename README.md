@@ -139,3 +139,19 @@ Added a galaxy picture as background .
 Changed all textures of planets. New textures file come from https://www.solarsystemscope.com/textures/.
 
 Added rot() function to calculate each rotation of planet.
+
+
+### [2021-05-09]
+
+#### Version: 1.1
+
+#### Contributor: Yue Qin
+
+Adjusted the distance between the planets, now you can see more planets. This also solves the problem of model clip.
+
+Changed default frame rate to 120 per second. That would aid in clarity and visualization capability. Also, the problem of shadow drag is alleviated.
+
+Added 4x anti-aliasing to program.
+
+Changed the sketch using the full size of the computer's display.
+

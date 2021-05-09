@@ -30,13 +30,19 @@ class Body {
         info = false;
         noStroke();
         noFill();
-        globe = createShape(SPHERE, diam/(2*radiusLevel*radiusLevel));
+        globe = createShape(SPHERE, diam/2/radiusLevel);
         globe.setTexture(img);
     }
     void display(){
         pushMatrix();
         noStroke();
-        translate(x/(coordinateLevel*coordinateLevel),y/(coordinateLevel*coordinateLevel),z/(coordinateLevel*coordinateLevel));
+        if (perihelion > 2e12){
+           translate(x/coordinateLevel/3,y/coordinateLevel/3,z/coordinateLevel/3);
+        }else if(perihelion > 5e11){
+           translate(x/coordinateLevel/2,y/coordinateLevel/2,z/coordinateLevel/2);
+        }else {
+           translate(x/coordinateLevel,y/coordinateLevel,z/coordinateLevel);
+        }
         fill(255);
         if(name != "Sun"){
            rot(timestep);
@@ -55,7 +61,7 @@ class Body {
         }
     }  
     void turnOnInfo(){
-      this.info = !this.info;
+      this.info = true;
     } 
     void initialPosition(){
         // set random x and y
@@ -83,6 +89,22 @@ class Body {
         x = a*cos(currentAngle);
         y = b*sin(currentAngle);
 
+    }
+    void displayOrbit(){
+        float a = (perihelion+aphelion)/2; // a is semi-major axis
+        float c = a - perihelion;
+        float b = sqrt(a*a-c*c); // b is semi-minor axis
+        pushMatrix();
+        stroke(50);
+        noFill();
+        if(perihelion > 2e12){
+           ellipse(0,0,2*a/coordinateLevel/3,2*b/coordinateLevel/3);
+        }else if (perihelion > 5e11){
+           ellipse(0,0,2*a/coordinateLevel/2,2*b/coordinateLevel/2);
+        }else {
+           ellipse(0,0,2*a/coordinateLevel,2*b/coordinateLevel);
+        }
+        popMatrix();
     }
     void rot(float time){
     //rotateY(axial_tilt);
