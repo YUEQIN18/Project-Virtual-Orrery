@@ -13,9 +13,11 @@ int radiusLevel = 500000;
 int coordinateLevel = 200000000;
 
 void setup(){
+
   size(displayWidth,displayHeight, P3D); //<>//
   frameRate(120);
   smooth(4);
+
   noStroke();
   sunTexture = loadImage("sun.jpg");
   mercuryT = loadImage("mercury.jpg");
@@ -50,6 +52,8 @@ void setup(){
   //Saturn = new Body("Saturn",0,0,568e24,1.20536e8,1.3526e12,1.5145e12  ,10747,10.7,saturnT);
   //Uranus = new Body("Uranus",0,0,86.8e24,5.1118e7,2.7413e12,3.0036e12,30589,-17.2,uranusT);
   //Neptune = new Body("Neptune",0,0,102e24,4.9528e7,4.4445e12,4.5457e12,59800,16.1,neptuneT);
+  
+  time = new ControlP5(this);
   
   time = new ControlP5(this);
   
@@ -89,44 +93,45 @@ void keyPressed() {
   }
   if (key == '2') {
     cam.lookAt(Mercury.x/(10000*10000), Mercury.y/(10000*10000), Mercury.z/(10000*10000),10.0,600);
-    timestep = 100;
+    timestep = 1000;
     Mercury.turnOnInfo();
   }
     if (key == '3') {
     cam.lookAt(Venus.x/(10000*10000), Venus.y/(10000*10000), Venus.z/(10000*10000),10.0,600);
-    timestep = 100;
+    timestep = 1000;
     Venus.turnOnInfo();
   }
   if (key == '4') {
     cam.lookAt(Earth.x/(10000*10000), Earth.y/(10000*10000), Earth.z/(10000*10000),10.0,600);
-    timestep = 100;
+    timestep = 1000;
     Earth.turnOnInfo();
   }
   if (key == '5') {
     cam.lookAt(Mars.x/(10000*10000), Mars.y/(10000*10000), Mars.z/(10000*10000),10.0,600);
-    timestep = 100;
+    timestep = 1000;
     Mars.turnOnInfo();
   }
   if (key == '6') {
     cam.lookAt(Jupiter.x/(10000*10000), Jupiter.y/(10000*10000), Jupiter.z/(10000*10000),1000.0,600);
-    timestep = 100;
+    timestep = 1000;
     Jupiter.turnOnInfo();
   }
   if (key == '7') {
     cam.lookAt(Saturn.x/(10000*10000), Saturn.y/(10000*10000), Saturn.z/(10000*10000),1000.0,600);
-    timestep = 100;
+    timestep = 1000;
     Saturn.turnOnInfo();
   }
   if (key == '8') {
     cam.lookAt(Uranus.x/(10000*10000), Uranus.y/(10000*10000), Uranus.z/(10000*10000),200.0,600);
-    timestep = 100;
+    timestep = 1000;
     Uranus.turnOnInfo();
   }
   if (key == '9') {
     cam.lookAt(Neptune.x/(10000*10000), Neptune.y/(10000*10000), Neptune.z/(10000*10000),10.0,600);
-    timestep = 100;
+    timestep = 1000;
     Neptune.turnOnInfo();
   }
+
   if (key == 'f' ||key == 'F'){
     if(timestep <= 25000) {
       timestep = timestep + 1000;
@@ -170,14 +175,19 @@ void draw(){
   ambientLight(255, 255, 255, 0, 0, 0); //ambientLight in the center of the sun
   solarSystem[0].display();
   //Sun.display();
-  
+
   cam.beginHUD();   
   fill(255, 140, 0);     
-  rect(0, 0, 350, 60);   
+  rect(0, 0, 360, 60);
+  //time.addButton("adjusterTime").setValue(0).setPosition(50,20).setSize(100,100);
+  //if (mouseX > 0 && mouseY > 0 && mouseX < 0 + 350 && mouseY < 0 + 140){
+  //    fill(128,128,0);
+  //}
+
   fill(255);
   textSize(40);
   text("Virtual Orrery", 40, 40);
-  
+
   rect(0,120,360,60);
   if (mouseX > 0 && mouseY > 120 && mouseX < 0 + 360 && mouseY < 0 + 180){
     fill(0,0,255);
@@ -185,7 +195,6 @@ void draw(){
   else{
     fill(255,0,0);
   }
-  
   cam.endHUD();
 
  }
