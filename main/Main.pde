@@ -8,7 +8,7 @@ PeasyCam cam;
 ControlP5 time, timeslider, planetInfo;
 
 Body[] solarSystem = new Body[10];
-
+  
 int timestep = 5000;
 int radiusLevel = 500000;
 int coordinateLevel = 200000000;
@@ -60,7 +60,17 @@ void setup(){
   cam.rotateX(-PI*3/8);
   cam.setMinimumDistance(200);
   cam.setMaximumDistance(8000);
-
+  
+  //create button for user to adjust time scale --
+  //addButton(theName, theValue, theX, theY, theW, theH);
+  PFont p = createFont("Verdana", 20);
+  ControlFont font = new ControlFont(p);
+  cp5.setFont(font);
+  cp5.addButton("slowDown", 1000, 0, 120, 180, 60).setId(1);
+  cp5.addButton("speedUp", 1000, 180, 120, 180, 60).setId(2);
+  cp5.setAutoDraw(false);
+  
+  
   time = new ControlP5(this);
   time.addButton("TimeAdjuster").setPosition(0,660).setSize(360,60);
   time.setAutoDraw(false);
@@ -102,10 +112,28 @@ void draw(){
   GUI();
  }
  
+void speedUp(float theValue) {
+  if(timestep < 25000){
+    timestep = timestep + int(theValue);
+  }
+  //println("a button event. "+theValue);
+}
+
+void slowDown(float theValue) {
+  if(timestep > 2000){
+    timestep = timestep - int(theValue);
+  }
+  //println("a button event. "+theValue);
+}
+
+void controlEvent(ControlEvent theEvent) {
+  println("Button " + theEvent.getController().getId() + " pressed");
+}
+
  void GUI(){
   hint(DISABLE_DEPTH_TEST);
   cam.beginHUD();
-  
+  cp5.draw();
   for(int i = 1; i < 10; i++){
     solarSystem[i].displayInfo();
   }
