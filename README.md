@@ -1,15 +1,35 @@
 
-
 # **Project: Virtual Orrery**
 
 ## Group Member : [AbhinandanNuli](https://github.com/AbhinandanNuli), [William Baltus](https://github.com/WilliamBaltus), [Yue Qin](https://github.com/YUEQIN18)
+
 ### Directory Structure
 
-├── Project-Virtual-Orrery   
-│  ├── main   : [Main.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/main/Main.pde) is the file could run.  
-│  └── src    : source code
+main   : [Main.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/main/Main.pde) is the file could run.  
 
+src    : source code
 
+### Instruction
+
+Press `1` camera will move to Sun
+
+Press `2` camera will move to Mercury
+
+Press `3` camera will move to Venus
+
+Press `4` camera will move to Earth
+
+Press `5` camera will move to Mars
+
+Press `6` camera will move to Jupiter
+
+Press `7` camera will move to Saturn
+
+Press `8` camera will move to Uranus
+
+Press `9` camera will move to Neptune
+
+Press `0` camera will move to Moon
 
 ### [2021-04-17] 
 
@@ -162,3 +182,13 @@ Changed the sketch using the full size of the computer's display.
 Added clickable buttons for each planet and added a button to change the timescale.
 
 Added Moon.
+
+### [2021-05-10]
+
+#### Version: 1.2
+
+#### Contributor: Yue Qin
+
+The keyboard shortcuts were return.
+
+Added instruction to README.md.
