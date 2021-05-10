@@ -1,9 +1,6 @@
-<hr>
+
 
 # **Project: Virtual Orrery**
-
-<hr>
-
 
 ## Group Member : [AbhinandanNuli](https://github.com/AbhinandanNuli), [William Baltus](https://github.com/WilliamBaltus), [Yue Qin](https://github.com/YUEQIN18)
 ### Directory Structure

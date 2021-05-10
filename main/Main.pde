@@ -67,12 +67,10 @@ void setup(){
   PFont p = createFont("Verdana", 20);
   ControlFont font = new ControlFont(p);
   time.setFont(font);
-  time.addButton("slowDown", 1000, 0, 660, 180, 60).setId(1);
-  time.addButton("speedUp", 1000, 180, 660, 180, 60).setId(2);
+  time.addButton("slowDown").setValue(1000).setPosition(0,660).setSize(180,60).setId(1);
+  time.addButton("speedUp").setValue(1000).setPosition(0,720).setSize(180,60).setId(2);
   time.setAutoDraw(false);
-  
-  
-  
+
   //time.addButton("TimeAdjuster").setPosition(0,660).setSize(360,60);
   //time.setAutoDraw(false);
   //timeslider = new ControlP5(this);
@@ -118,19 +116,14 @@ void speedUp(float theValue) {
   if(timestep < 25000){
     timestep = timestep + int(theValue);
   }
-  //println("a button event. "+theValue);
 }
 
 void slowDown(float theValue) {
   if(timestep > 2000){
     timestep = timestep - int(theValue);
   }
-  //println("a button event. "+theValue);
 }
 
-void controlEvent(ControlEvent theEvent) {
-  println("Button " + theEvent.getController().getId() + " pressed");
-}
 
  void GUI(){
   hint(DISABLE_DEPTH_TEST);
@@ -240,4 +233,38 @@ void Moon(){
     solarSystem[i].info = false;
   }
   solarSystem[9].turnOnInfo();
+}
+
+void keyPressed() {
+  if (key == '1') {
+    Sun();
+  }
+  if (key == '2') {
+    Mercury();
+  }
+  if (key == '3') {
+    Venus();
+  }
+  if (key == '4') {
+    Earth();
+  }
+  if (key == '5') {
+    Mars();
+  }
+  if (key == '6') {
+    Jupiter();
+  }
+  if (key == '7') {
+    Saturn();
+  }
+  if (key == '8') {
+    Uranus();
+  }
+  if (key == '9') {
+    Neptune();
+  }
+  if (key == '0') {
+    Moon();
+  }
+ 
 }
