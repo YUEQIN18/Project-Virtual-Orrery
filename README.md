@@ -5,7 +5,7 @@
 
 ### Directory Structure
 
-main   : [Main.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/main/Main.pde) is the file could run.  
+main   : [Main.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/main/Main.pde) is the file could run. Needs to be in a folder named `Main.`
 
 src    : source code
 
@@ -30,6 +30,12 @@ Press `8` camera will move to Uranus
 Press `9` camera will move to Neptune
 
 Press `0` camera will move to Moon
+
+Press `speedUp` and then the solar system will move faster.
+
+Press `slowDown` and then the solar system will move slower.
+
+Press `any of the HUD buttons` and the camera will move to that body.
 
 ### [2021-05-11]
 
