@@ -11,11 +11,12 @@ class Body {
     float rotationalPeriod; // (hours)
     float currentAngle; // (radian)
     float rotateAngle;
+    float OrbitTilt; //(degree)
     PShape globe;
     boolean info;
     String infoText;
     // constructor
-    Body(String name, float x, float y, float m, float diam, float perihelion, float aphelion, float orbPeriod, float rotationalPeriod, PImage img, String infoText){
+    Body(String name, float x, float y, float m, float diam, float perihelion, float aphelion, float orbPeriod, float rotationalPeriod, float OrbitTilt,PImage img, String infoText){
         this.name = name;
         this.x = x;
         this.y = y;
@@ -26,6 +27,7 @@ class Body {
         this.aphelion =  aphelion;
         this.orbPeriod = orbPeriod;
         this.rotationalPeriod = rotationalPeriod;
+        this.OrbitTilt = -OrbitTilt/180*PI;
         this.infoText = infoText;
         currentAngle = 0;
         rotateAngle = 0;
@@ -47,15 +49,26 @@ class Body {
         }else {
            translate(x/coordinateLevel,y/coordinateLevel,z/coordinateLevel);
         }      
-        if(name != "Sun"){
-          rot(timestep);
-        }
+        rot(timestep);
         rotateX(-PI/2); // rotate each planet to right angle for rotation
         fill(255);
         shape(globe);
         popMatrix();
 
     }
+    
+    void rot(float time){
+    
+    rotateY(OrbitTilt);
+    if(name != "Sun"){
+      rotateZ(radians(rotateAngle));
+    }
+    rotateAngle = rotateAngle + time * 360/rotationalPeriod/3600;
+    if (name == "Saturn"){
+      shape(SaturnRings);
+    }
+    
+  }
     void displayInfo(){
       if(info == true){
           cam.beginHUD();   
@@ -131,11 +144,7 @@ class Body {
         }else {
           ellipse(0,0,2*a/coordinateLevel,2*b/coordinateLevel);
         }
-        //if (name == "Saturn"){
-        //  PShape ring = createShape(ELLIPSE, x/coordinateLevel/2,y/coordinateLevel/2,diam/2/radiusLevel+250,diam/2/radiusLevel+250);
-        //  ring.setTexture(saturnRingT);  
-        //  shape(ring);
-        //}
+
         if (name == "Earth"){
           float ma = (solarSystem[9].perihelion+solarSystem[9].aphelion)/2;
           float mc = ma - solarSystem[9].perihelion;
@@ -144,9 +153,82 @@ class Body {
         }
         popMatrix();
     }
-    void rot(float time){
-    //rotateY(axial_tilt);
-    rotateZ(radians(rotateAngle));
-    rotateAngle = rotateAngle + time * 360/rotationalPeriod/3600;
+
+  void ringSetup(){
+    final float h = 0.552284749831; 
+    float Ra1 = 2.03*diam/2/radiusLevel;
+    float Ra2 = 2.27*diam/2/radiusLevel;
+    float Rb1 = 1.526*diam/2/radiusLevel;
+    float Rb2 = 1.950*diam/2/radiusLevel;
+    float Rc1 = 1.239*diam/2/radiusLevel;
+    float Rc2 = 1.526*diam/2/radiusLevel;
+    float Rd1 = 1.11*diam/2/radiusLevel;
+    float Rd2 = 1.236*diam/2/radiusLevel;
+    color Acolor = color(93,90,90,0.8*255); 
+    color Bcolor = color(112,105,100,0.9*255); 
+    color Ccolor = color(128,116,104,0.49*255); 
+    color Dcolor = color(99,95,90,0.19*255); 
+    noStroke();
+    SaturnRings = createShape(GROUP);
+    PShape D = createShape();
+    D.beginShape();             
+    D.fill(Dcolor);           
+    D.vertex(X,Y-Rd1,Z);             
+    D.bezierVertex((X-h*Rd1),Y-Rd1,Z,X-Rd1, (Y-h *Rd1),Z, X-Rd1, Y,Z);      //left-up 
+    D.bezierVertex(X-Rd1, (Y+h*Rd1),Z,(X-h*Rd1), Y+Rd1,Z, X, Y+Rd1,Z);   //left-b
+    D.bezierVertex((X+h*Rd1), Y+Rd1,Z, X+Rd1, (Y+h *Rd1),Z, X+Rd1, Y,Z);  //ritgt-b
+    D.bezierVertex(X+Rd1, (Y-h*Rd1),Z, (X+h*Rd1), Y-Rd1,Z, X, Y-Rd1,Z);          //right-up
+    D.vertex(X,Y-Rd2,Z);   
+    D.bezierVertex((X+h*Rd2), Y-Rd2,Z,(X+Rd2), (Y-h*Rd2),Z, X+Rd2, Y,Z);  //right-up
+    D.bezierVertex(X+Rd2, (Y+h *Rd2),Z,(X+h*Rd2), Y+Rd2,Z, X, Y+Rd2,Z);   //right-b
+    D.bezierVertex((X-h*Rd2), Y+Rd2,Z,X-Rd2,(Y+h*Rd2),Z, X-Rd2, Y,Z);      //left-b 
+    D.bezierVertex(X-Rd2, (Y-h *Rd2),Z,(X-h*Rd2), Y-Rd2,Z, X, Y-Rd2,Z);   //left-up  
+    D.endShape(); 
+    PShape C = createShape(); 
+    C.beginShape(); 
+    C.fill(Ccolor);           
+    C.vertex(X,Y-Rc1,Z);             
+    C.bezierVertex((X-h*Rc1),Y-Rc1,Z,X-Rc1, (Y-h *Rc1),Z, X-Rc1, Y,Z);      //left-up 
+    C.bezierVertex(X-Rc1, (Y+h*Rc1),Z,(X-h*Rc1), Y+Rc1,Z, X, Y+Rc1,Z);   //left-b
+    C.bezierVertex((X+h*Rc1), Y+Rc1,Z, X+Rc1, (Y+h *Rc1),Z, X+Rc1, Y,Z);  //ritgt-b
+    C.bezierVertex(X+Rc1, (Y-h*Rc1),Z, (X+h*Rc1), Y-Rc1,Z, X, Y-Rc1,Z);          //right-up
+    C.vertex(X,Y-Rc2,Z);   
+    C.bezierVertex((X+h*Rc2), Y-Rc2,Z,(X+Rc2), (Y-h*Rc2),Z, X+Rc2, Y,Z);  //right-up
+    C.bezierVertex(X+Rc2, (Y+h *Rc2),Z,(X+h*Rc2), Y+Rc2,Z, X, Y+Rc2,Z);   //right-b
+    C.bezierVertex((X-h*Rc2), Y+Rc2,Z,X-Rc2,(Y+h*Rc2),Z, X-Rc2, Y,Z);      //left-b 
+    C.bezierVertex(X-Rc2, (Y-h *Rc2),Z,(X-h*Rc2), Y-Rc2,Z, X, Y-Rc2,Z);   //left-up
+    C.endShape();
+    PShape B = createShape(); 
+    B.beginShape(); 
+    B.fill(Bcolor);           
+    B.vertex(X,Y-Rb1,Z);             
+    B.bezierVertex((X-h*Rb1),Y-Rb1,Z,X-Rb1, (Y-h *Rb1),Z, X-Rb1, Y,Z);      //left-up 
+    B.bezierVertex(X-Rb1, (Y+h*Rb1),Z,(X-h*Rb1), Y+Rb1,Z, X, Y+Rb1,Z);   //left-b
+    B.bezierVertex((X+h*Rb1), Y+Rb1,Z, X+Rb1, (Y+h *Rb1),Z, X+Rb1, Y,Z);  //ritgt-b
+    B.bezierVertex(X+Rb1, (Y-h*Rb1),Z, (X+h*Rb1), Y-Rb1,Z, X, Y-Rb1,Z);          //right-up
+    B.vertex(X,Y-Rb2,Z);   
+    B.bezierVertex((X+h*Rb2), Y-Rb2,Z,(X+Rb2), (Y-h*Rb2),Z, X+Rb2, Y,Z);  //right-up
+    B.bezierVertex(X+Rb2, (Y+h *Rb2),Z,(X+h*Rb2), Y+Rb2,Z, X, Y+Rb2,Z);   //right-b
+    B.bezierVertex((X-h*Rb2), Y+Rb2,Z,X-Rb2,(Y+h*Rb2),Z, X-Rb2, Y,Z);      //left-b 
+    B.bezierVertex(X-Rb2, (Y-h *Rb2),Z,(X-h*Rb2), Y-Rb2,Z, X, Y-Rb2,Z);   //left-up
+    B.endShape();
+    PShape A = createShape(); 
+    A.beginShape(); 
+    A.fill(Acolor);           
+    A.vertex(X,Y-Ra1,Z);             
+    A.bezierVertex((X-h*Ra1),Y-Ra1,Z,X-Ra1, (Y-h *Ra1),Z, X-Ra1, Y,Z);      //left-up 
+    A.bezierVertex(X-Ra1, (Y+h*Ra1),Z,(X-h*Ra1), Y+Ra1,Z, X, Y+Ra1,Z);   //left-b
+    A.bezierVertex((X+h*Ra1), Y+Ra1,Z, X+Ra1, (Y+h *Ra1),Z, X+Ra1, Y,Z);  //ritgt-b
+    A.bezierVertex(X+Ra1, (Y-h*Ra1),Z, (X+h*Ra1), Y-Ra1,Z, X, Y-Ra1,Z);          //right-up
+    A.vertex(X,Y-Ra2,Z);   
+    A.bezierVertex((X+h*Ra2), Y-Ra2,Z,(X+Ra2), (Y-h*Ra2),Z, X+Ra2, Y,Z);  //right-up
+    A.bezierVertex(X+Ra2, (Y+h *Ra2),Z,(X+h*Ra2), Y+Ra2,Z, X, Y+Ra2,Z);   //right-b
+    A.bezierVertex((X-h*Ra2), Y+Ra2,Z,X-Ra2,(Y+h*Ra2),Z, X-Ra2, Y,Z);      //left-b 
+    A.bezierVertex(X-Ra2, (Y-h *Ra2),Z,(X-h*Ra2), Y-Ra2,Z, X, Y-Ra2,Z);   //left-up
+    A.endShape();
+    SaturnRings.addChild(D);
+    SaturnRings.addChild(C);
+    SaturnRings.addChild(B);
+    SaturnRings.addChild(A);
   }
 }

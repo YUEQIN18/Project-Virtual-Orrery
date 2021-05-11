@@ -2,6 +2,7 @@ import peasy.*;
 import controlP5.*;
 import processing.opengl.*;
 
+PShape SaturnRings;
 PImage starBackground,sunTexture,mercuryT,venusT,earthT,moonT,marsT,jupiterT,saturnT,saturnRingT,uranusT,neptuneT;
 String sunText, mercuryText, venusText, earthText,moonText, marsText, jupiterText, saturnText, uranusText, neptuneText;
 PeasyCam cam;
@@ -15,8 +16,8 @@ int coordinateLevel = 200000000; //<>//
 boolean sliderOn = false;
 
 void setup(){
-  //size(2400,1200, P3D); //<>//
-  fullScreen(P3D);
+  size(2400,1200, P3D); //<>//
+  //fullScreen(P3D);
   frameRate(120);
   smooth(4);
 
@@ -45,16 +46,16 @@ void setup(){
   uranusText= "Uranus—seventh planet from the Sun—rotates at a nearly 90-degree angle from the plane of its orbit. This unique tilt makes Uranus appear to spin on its side.";
   neptuneText= "Neptune—the eighth and most distant major planet orbiting our Sun—is dark, cold and whipped by supersonic winds. It was the first planet located through mathematical calculations, rather than by telescope.";
   
-  solarSystem[0] = new Body("Sun",0,0,1.9891e30,1.391684e9/6,0,0,587.28,0,sunTexture,sunText);
-  solarSystem[1] = new Body("Mercury",0,0,0.330e24,4.879e6,4.6e10,6.98e10,88,1407.6,mercuryT,mercuryText);
-  solarSystem[2] = new Body("Venus",0,0,4.87e24,1.2104e7,1.075e11,1.089e11,224.7,-5832.5,venusT,venusText);
-  solarSystem[3] = new Body("Earth",0,0,5.97e24,1.2756e7,1.471e11,1.521e11,365.2425,23.9,earthT,earthText);
-  solarSystem[4] = new Body("Mars",0,0,0.642e24,6.792e7,2.066e11,2.492e11,687.0,24.6,marsT,marsText);
-  solarSystem[5] = new Body("Jupiter",0,0,1898e24,1.42984e8,7.405e11,8.166e11,4331,9.9,jupiterT,jupiterText);
-  solarSystem[6] = new Body("Saturn",0,0,568e24,1.20536e8,1.3526e12,1.5145e12  ,10747,10.7,saturnT,saturnText);
-  solarSystem[7] = new Body("Uranus",0,0,86.8e24,5.1118e7,2.7413e12,3.0036e12,30589,-17.2,uranusT,uranusText);
-  solarSystem[8] = new Body("Neptune",0,0,102e24,4.9528e7,4.4445e12,4.5457e12,59800,16.1,neptuneT,neptuneText);
-  solarSystem[9] = new Body("Moon",0,0,0.073e24,3.475e6,0.363e9,0.406e9,27.3,655.7,moonT,moonText);
+  solarSystem[0] = new Body("Sun",0,0,1.9891e30,1.391684e9/6,0,0,587.28,0,0,sunTexture,sunText);
+  solarSystem[1] = new Body("Mercury",0,0,0.330e24,4.879e6,4.6e10,6.98e10,88,1407.6,0.03,mercuryT,mercuryText);
+  solarSystem[2] = new Body("Venus",0,0,4.87e24,1.2104e7,1.075e11,1.089e11,224.7,-5832.5,2.64,venusT,venusText);
+  solarSystem[3] = new Body("Earth",0,0,5.97e24,1.2756e7,1.471e11,1.521e11,365.2425,23.9,23.44,earthT,earthText);
+  solarSystem[4] = new Body("Mars",0,0,0.642e24,6.792e7,2.066e11,2.492e11,687.0,24.6,25.19,marsT,marsText);
+  solarSystem[5] = new Body("Jupiter",0,0,1898e24,1.42984e8,7.405e11,8.166e11,4331,9.9,3.13,jupiterT,jupiterText);
+  solarSystem[6] = new Body("Saturn",0,0,568e24,1.20536e8,1.3526e12,1.5145e12  ,10747,10.7,26.73,saturnT,saturnText);
+  solarSystem[7] = new Body("Uranus",0,0,86.8e24,5.1118e7,2.7413e12,3.0036e12,30589,-17.2,82.23,uranusT,uranusText);
+  solarSystem[8] = new Body("Neptune",0,0,102e24,4.9528e7,4.4445e12,4.5457e12,59800,16.1,28.32,neptuneT,neptuneText);
+  solarSystem[9] = new Body("Moon",0,0,0.073e24,3.475e6,0.363e9,0.406e9,27.3,655.7,6.68,moonT,moonText);
   
   cam = new PeasyCam(this,5000);
   cam.rotateX(-PI*3/8);
@@ -94,7 +95,9 @@ void setup(){
   for(int i = 0; i < 10; i++){
     solarSystem[i].initialPosition();
   }
-
+  // Setup the ring of Saturn;
+  
+  solarSystem[6].ringSetup();
 }
 
 void draw(){
@@ -105,10 +108,10 @@ void draw(){
     solarSystem[i].display();
     solarSystem[i].displayOrbit();
   } 
-  
   ambientLight(255, 255, 255, 0, 0, 0); //ambientLight in the center of the sun
   solarSystem[0].display();
   
+
   GUI();
  }
  
@@ -119,7 +122,7 @@ void speedUp(float theValue) {
 }
 
 void slowDown(float theValue) {
-  if(timestep > 2000){
+  if(timestep > 100){
     timestep = timestep - int(theValue);
   }
 }

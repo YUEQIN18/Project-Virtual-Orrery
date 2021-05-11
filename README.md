@@ -31,6 +31,16 @@ Press `9` camera will move to Neptune
 
 Press `0` camera will move to Moon
 
+### [2021-05-11]
+
+#### Version: 1.3
+
+#### Contributor: Yue Qin
+
+Added rings of Saturn. It's really hard code.
+
+
+
 ### [2021-05-10]
 
 #### Version: 1.2
