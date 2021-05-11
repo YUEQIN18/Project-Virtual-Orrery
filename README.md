@@ -41,6 +41,10 @@ Added rings of Saturn. It's really hard code.
 
 Added asteroid belt.
 
+Added Halley's Comet. 
+
+Time adjustment slider was return. Now the camera will no longer move while sliding the slider.
+
 
 ### [2021-05-10]
 

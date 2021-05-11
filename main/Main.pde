@@ -4,21 +4,22 @@ import processing.opengl.*;
 
 PShape SaturnRings;
 PImage starBackground,sunTexture,mercuryT,venusT,earthT,moonT,marsT,jupiterT,saturnT,saturnRingT,uranusT,neptuneT;
-String sunText, mercuryText, venusText, earthText,moonText, marsText, jupiterText, saturnText, uranusText, neptuneText;
+String sunText, mercuryText, venusText, earthText,moonText, marsText, jupiterText, saturnText, uranusText, neptuneText,HalleyText;
 PeasyCam cam;
 ControlP5 time, timeslider, planetInfo;
 
-Body[] solarSystem = new Body[10];
-Body[] asteroidBelt = new Body[1500];
+Body[] solarSystem = new Body[11];
+Body[] asteroidBelt = new Body[1666];
   
 int timestep = 5000;
 int radiusLevel = 500000;
 int coordinateLevel = 200000000; //<>//
 boolean sliderOn = false;
+boolean orbitOn = true;
 
 void setup(){
-  size(2400,1200, P3D); //<>//
-  //fullScreen(P3D);
+  //size(2400,1200, P3D); //<>//
+  fullScreen(P3D);
   frameRate(120);
   smooth(4);
 
@@ -46,6 +47,7 @@ void setup(){
   saturnText= "Adorned with a dazzling, complex system of icy rings, Saturn is unique in our solar system. The other giant planets have rings, but none are as spectacular as Saturn's.";
   uranusText= "Uranus—seventh planet from the Sun—rotates at a nearly 90-degree angle from the plane of its orbit. This unique tilt makes Uranus appear to spin on its side.";
   neptuneText= "Neptune—the eighth and most distant major planet orbiting our Sun—is dark, cold and whipped by supersonic winds. It was the first planet located through mathematical calculations, rather than by telescope.";
+  HalleyText = "";
   
   solarSystem[0] = new Body("Sun",0,0,1.9891e30,1.391684e9/6,0,0,587.28,0,0,sunTexture,sunText);
   solarSystem[1] = new Body("Mercury",0,0,0.330e24,4.879e6,4.6e10,6.98e10,88,1407.6,0.03,mercuryT,mercuryText);
@@ -57,6 +59,7 @@ void setup(){
   solarSystem[7] = new Body("Uranus",0,0,86.8e24,5.1118e7,2.7413e12,3.0036e12,30589,-17.2,82.23,uranusT,uranusText);
   solarSystem[8] = new Body("Neptune",0,0,102e24,4.9528e7,4.4445e12,4.5457e12,59800,16.1,28.32,neptuneT,neptuneText);
   solarSystem[9] = new Body("Moon",0,0,0.073e24,3.475e6,0.363e9,0.406e9,27.3,655.7,6.68,moonT,moonText);
+  solarSystem[10] = new Body("Halley's comet",10e15,1.2e7,8.8e10,5.3e12/4);
     
   cam = new PeasyCam(this,5000);
   cam.rotateX(-PI*3/8);
@@ -69,27 +72,29 @@ void setup(){
   PFont p = createFont("Verdana", 20);
   ControlFont font = new ControlFont(p);
   time.setFont(font);
-  time.addButton("slowDown").setValue(1000).setPosition(0,660).setSize(180,60).setId(1);
-  time.addButton("speedUp").setValue(1000).setPosition(0,720).setSize(180,60).setId(2);
+  time.addButton("TimeAdjuster").setPosition(0,720).setSize(180,60);
+  time.addButton("slowDown").setValue(1000).setPosition(0,780).setSize(180,60).setId(1);
+  time.addButton("speedUp").setValue(1000).setPosition(0,840).setSize(180,60).setId(2);
   time.setAutoDraw(false);
 
-  //time.addButton("TimeAdjuster").setPosition(0,660).setSize(360,60);
-  //time.setAutoDraw(false);
-  //timeslider = new ControlP5(this);
-  //timeslider.addSlider("timestep").setPosition(400,660).setSize(360,60).setRange(100,10000).setValue(5000);
-  //timeslider.setAutoDraw(false);
+  timeslider = new ControlP5(this);
+  timeslider.setFont(font);
+  timeslider.addSlider("timestep").setPosition(180,720).setSize(360,60).setRange(100,50000).setValue(5000);
+  timeslider.setAutoDraw(false);
 
   planetInfo = new ControlP5(this);
-  planetInfo.addButton("Sun").setPosition(0,60).setSize(100,60);
-  planetInfo.addButton("Mercury").setPosition(0,120).setSize(100,60);
-  planetInfo.addButton("Venus").setPosition(0,180).setSize(100,60);
-  planetInfo.addButton("Earth").setPosition(0,240).setSize(100,60);
-  planetInfo.addButton("Mars").setPosition(0,300).setSize(100,60);
-  planetInfo.addButton("Jupiter").setPosition(0,360).setSize(100,60);
-  planetInfo.addButton("Saturn").setPosition(0,420).setSize(100,60);
-  planetInfo.addButton("Uranus").setPosition(0,480).setSize(100,60);
-  planetInfo.addButton("Neptune").setPosition(0,540).setSize(100,60);
-  planetInfo.addButton("Moon").setPosition(0,600).setSize(100,60);
+  planetInfo.addButton("Sun").setPosition(0,60).setSize(180,60);
+  planetInfo.addButton("Mercury").setPosition(0,120).setSize(180,60);
+  planetInfo.addButton("Venus").setPosition(0,180).setSize(180,60);
+  planetInfo.addButton("Earth").setPosition(0,240).setSize(180,60);
+  planetInfo.addButton("Mars").setPosition(0,300).setSize(180,60);
+  planetInfo.addButton("Jupiter").setPosition(0,360).setSize(180,60);
+  planetInfo.addButton("Saturn").setPosition(0,420).setSize(180,60);
+  planetInfo.addButton("Uranus").setPosition(0,480).setSize(180,60);
+  planetInfo.addButton("Neptune").setPosition(0,540).setSize(180,60);
+  planetInfo.addButton("Moon").setPosition(0,600).setSize(180,60);
+  planetInfo.addButton("HalleyComet").setPosition(0,660).setSize(180,60);
+  planetInfo.addButton("TurnOnOrbit").setPosition(0,900).setSize(180,60);
   planetInfo.setFont(font);
   planetInfo.setAutoDraw(false);
   
@@ -102,7 +107,7 @@ void setup(){
   
   // Setup asteroid belt
   for(int i=0; i< asteroidBelt.length; i++){
-     asteroidBelt[i] = new Body(1,5*randomGaussian()*random(1e5,5e5),0.75*random(3.29e11,4.28e11));
+     asteroidBelt[i] = new Body("a",1,5*randomGaussian()*random(1e5,5e5),0.6*random(3.29e11,4.28e11),random(3.29e11,4.28e11));
   }
   for(int i=0; i< asteroidBelt.length; i++){
      asteroidBelt[i].initialPosition();
@@ -112,10 +117,12 @@ void setup(){
 void draw(){
   background(starBackground); 
   pointLight(255, 255, 255, 0, 0, 0); //for the normal behaviour of the sun light 
+  pointLight(25, 25, 25, 0, 0, 0); 
   for(int i = 1; i < solarSystem.length; i++){
     solarSystem[i].setPosition(timestep);
     solarSystem[i].display();
-    solarSystem[i].displayOrbit();
+    if (orbitOn)
+      solarSystem[i].displayOrbit();
   } 
   
   for(int i=0; i< asteroidBelt.length; i++){
@@ -125,24 +132,11 @@ void draw(){
   
   ambientLight(255, 255, 255, 0, 0, 0); //ambientLight in the center of the sun
   solarSystem[0].display();
-  
+  solarSystem[10].cometTail();
 
   GUI();
  }
  
-void speedUp(float theValue) {
-  if(timestep < 25000){
-    timestep = timestep + int(theValue);
-  }
-}
-
-void slowDown(float theValue) {
-  if(timestep > 100){
-    timestep = timestep - int(theValue);
-  }
-}
-
-
  void GUI(){
   hint(DISABLE_DEPTH_TEST);
   cam.beginHUD();
@@ -165,14 +159,32 @@ void slowDown(float theValue) {
  }
  
 void TimeAdjuster() {
+
   sliderOn = !sliderOn;
+  if (sliderOn == false)
+    cam.setActive(true);
 }
 
+void timestep(){
+  if (mousePressed == true)
+    cam.setActive(false);
+}
+
+void speedUp(float theValue) {
+  if(timestep < 50000){
+    timestep = timestep + int(theValue);
+  }
+}
+
+void slowDown(float theValue) {
+  if(timestep > 1000){
+    timestep = timestep - int(theValue);
+  }
+}
 
 void Sun(){
   cam.reset();
   cam.lookAt(solarSystem[0].x/coordinateLevel, solarSystem[0].y/coordinateLevel, solarSystem[0].z/coordinateLevel,1000,600);
-  timestep = 100;
   for(int i = 0; i < 10; i++){
     solarSystem[i].info = false;
   }
@@ -251,6 +263,14 @@ void Moon(){
     solarSystem[i].info = false;
   }
   solarSystem[9].turnOnInfo();
+}
+
+void HalleyComet(){
+  cam.lookAt(solarSystem[10].x/coordinateLevel, solarSystem[10].y/coordinateLevel, solarSystem[10].z/coordinateLevel,10,600);
+}
+
+void TurnOnOrbit(){
+  orbitOn = !orbitOn;
 }
 
 void keyPressed() {

@@ -15,16 +15,19 @@ class Body {
     PShape globe;
     boolean info;
     String infoText;
+    float [] xpos;
+    float [] ypos;
+    PShape[] tails;
     // constructor
-    Body(float m, float diam, float perihelion){
-        this.name = "a";
+    Body(String name,float m, float diam, float perihelion, float aphelion){
+        this.name = name;
         this.x = 0;
         this.y = 0;
         this.z = 0;
         this.mass = m;
         this.diam = diam;
         this.perihelion = perihelion;
-        this.aphelion =  perihelion;
+        this.aphelion =  aphelion;
         this.orbPeriod = 1;
         this.rotationalPeriod = 1;
         this.OrbitTilt = 1;
@@ -33,14 +36,32 @@ class Body {
         info = false;
         noStroke();
         fill(150);
-        float type = random(1);
-        if(type > 0.4){
+        
+        if(name =="a"){
+          float type = random(1);
+          if(type > 0.4){
           globe = createShape(RECT,0,0,diam/2/radiusLevel, diam/2/radiusLevel);
-        }else{
+          }else{
+          sphereDetail(3);
           globe = createShape(SPHERE, diam/2/radiusLevel);
         }
-
-        
+        }
+        if(name =="Halley's comet"){
+          xpos = new float[100];
+          ypos = new float[100];
+          tails = new PShape[100];
+          for(int i = 0; i < xpos.length; i++){
+            xpos[i] = 0;
+            ypos[i] = 0;
+            fill(50+2*i,50+2*i,100+1.5*i);
+            sphereDetail(6);
+            tails[i] = createShape(SPHERE, i*diam/2/radiusLevel/xpos.length);
+          }
+          fill(150,150,250);
+          sphereDetail(24);
+          globe = createShape(SPHERE, diam/2/radiusLevel);
+        }
+       
     }
     Body(String name, float x, float y, float m, float diam, float perihelion, float aphelion, float orbPeriod, float rotationalPeriod, float OrbitTilt,PImage img, String infoText){
         this.name = name;
@@ -60,6 +81,7 @@ class Body {
         info = false;
         noStroke();
         noFill();
+        sphereDetail(60);
         globe = createShape(SPHERE, diam/2/radiusLevel);
         globe.setTexture(img);
     }
@@ -75,7 +97,7 @@ class Body {
         }else {
            translate(x/coordinateLevel,y/coordinateLevel,z/coordinateLevel);
         } 
-        if (name != "a"){
+        if (name != "a" && name != "Halley's comet"){
           rot(timestep);
         }   
         rotateX(-PI/2); // rotate each planet to right angle for rotation
@@ -122,6 +144,9 @@ class Body {
         if (name == "Moon"){
           x = 50*a*cos(currentAngle) + solarSystem[3].x;
           y = 50*b*sin(currentAngle) + solarSystem[3].y;
+        } else if (name == "Halley's comet"){
+          x = a*cos(currentAngle)-c;
+          y = b*sin(currentAngle);
         } else{
           x = a*cos(currentAngle);
           y = b*sin(currentAngle);
@@ -139,6 +164,22 @@ class Body {
           float b = sqrt(a*a-c*c); // b is semi-minor axis
           x = 50*a*cos(currentAngle) + solarSystem[3].x;
           y = 50*b*sin(currentAngle) + solarSystem[3].y;
+        }else if (name == "Halley's comet"){
+          float dist = sqrt(x * x + y * y); // Distance between Sun and planet
+          float G = 6.67e-11; // Gravitation instance
+          float M = 1.9891e30; // Mass of Sun
+          float angularVelocity = sqrt(G * M / pow(dist,3));
+          float angle = angularVelocity * time ; // Radian
+          // Now we have the angle of planet movement
+          // Next we calculate the position fo planet
+          //if(name =="a")
+          //println(angularVelocity); //8.4856886E-8
+          currentAngle = currentAngle + angle;
+          float a = (perihelion+aphelion)/2; // a is semi-major axis
+          float c = a - perihelion;
+          float b = sqrt(a*a-c*c);
+          x = a*cos(currentAngle)-c;
+          y = b*sin(currentAngle);
         } else {
           // calculate the next position of planet after 1 second or 0.1 second
           float dist = sqrt(x * x + y * y); // Distance between Sun and planet
@@ -161,13 +202,17 @@ class Body {
     }
     
     void displayOrbit(){
+
         float a = (perihelion+aphelion)/2; // a is semi-major axis
         float c = a - perihelion;
         float b = sqrt(a*a-c*c); // b is semi-minor axis
         pushMatrix();
         stroke(50);
         noFill();
-
+        if(name == "Halley's comet"){
+          translate(-c/coordinateLevel,0,0);
+          ellipse(0,0,2*a/coordinateLevel,2*b/coordinateLevel);
+        }
         if(perihelion > 2e12){
           ellipse(0,0,2*a/coordinateLevel/3,2*b/coordinateLevel/3);
         }else if (perihelion > 5e11){
@@ -184,6 +229,22 @@ class Body {
         }
         popMatrix();
     }
+
+  void cometTail(){
+    
+    for(int i =0 ; i < xpos.length-1 ; i++){
+      xpos[i] = xpos[i+1];
+      ypos[i] = ypos[i+1];
+    }
+    xpos[xpos.length - 1] = x;
+    ypos[ypos.length - 1] = y;
+    pushMatrix();
+    noStroke();
+    for(int i = 0; i < xpos.length; i++){
+      shape(tails[i],xpos[i]/coordinateLevel,ypos[i]/coordinateLevel); 
+    }
+    popMatrix();
+  }
 
   void ringSetup(){
     final float h = 0.552284749831; 
