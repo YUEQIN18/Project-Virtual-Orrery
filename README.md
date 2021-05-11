@@ -5,31 +5,41 @@
 
 ### Directory Structure
 
-main   : [Main.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/main/Main.pde) is the file could run. Needs to be in a folder named `Main.`
+
+main   : [Main.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/main/Main.pde) is the file to run. Needs to be in a folder named `Main.` 
+
 
 src    : source code
 
-### Instruction
+### Instructions
 
-Press `1` camera will move to Sun
+Press `1` and then the camera will move to Sun
 
-Press `2` camera will move to Mercury
+Press `2` and then the camera will move to Mercury
 
-Press `3` camera will move to Venus
+Press `3` and then the camera will move to Venus
 
-Press `4` camera will move to Earth
+Press `4` and then the camera will move to Earth
 
-Press `5` camera will move to Mars
+Press `5` and then the camera will move to Mars
 
-Press `6` camera will move to Jupiter
+Press `6` and then the camera will move to Jupiter
 
-Press `7` camera will move to Saturn
+Press `7` and then the camera will move to Saturn
 
-Press `8` camera will move to Uranus
+Press `8` and then the camera will move to Uranus
 
-Press `9` camera will move to Neptune
+Press `9` and then the camera will move to Neptune
 
-Press `0` camera will move to Moon
+Press `0` and then the camera will move to Moon
+
+Press `speedUp` and then the solar system will move faster.
+
+Press `slowDown` and then the solar system will move slower. 
+
+Press `any of the HUD buttons` and the camera will move to that body. 
+
+
 
 Press `speedUp` and then the solar system will move faster.
 
@@ -58,9 +68,19 @@ Time adjustment slider was return. Now the camera will no longer move while slid
 
 #### Contributor: Yue Qin
 
-The keyboard shortcuts were return.
+The keyboard shortcuts were added back alongside the HUD buttons. 
 
 Added instruction to README.md.
+
+### [2021-05-09]
+
+#### Version: 1.1.5
+
+#### Contributor: William Baltus  
+
+Added "SpeedUp" and "SlowDown" buttons for timescale. Fixed and adjusted planet buttons + font. Refactored code to remove unused code.  
+
+Done using controlP5 library. 
 
 ### [2021-05-09]
 
@@ -113,8 +133,9 @@ Added `rot()` function to calculate each rotation of planet.
 #### Contributor: William Baltus
 
 Added lights such that it seems they are originating from sun object.  
+Added camera features. Can now move around solar system via zooming in and out, panning, and rotating. Can also reset back to default view. Working on clipping issue.
 Camera max and min distance set.
-Working on timescale manipulation
+Working on timescale manipulation + code for buttons. 
 
 ### [2021-05-03]
 
