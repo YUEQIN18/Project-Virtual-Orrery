@@ -9,6 +9,7 @@ PeasyCam cam;
 ControlP5 time, timeslider, planetInfo;
 
 Body[] solarSystem = new Body[10];
+Body[] asteroidBelt = new Body[1500];
   
 int timestep = 5000;
 int radiusLevel = 500000;
@@ -56,7 +57,7 @@ void setup(){
   solarSystem[7] = new Body("Uranus",0,0,86.8e24,5.1118e7,2.7413e12,3.0036e12,30589,-17.2,82.23,uranusT,uranusText);
   solarSystem[8] = new Body("Neptune",0,0,102e24,4.9528e7,4.4445e12,4.5457e12,59800,16.1,28.32,neptuneT,neptuneText);
   solarSystem[9] = new Body("Moon",0,0,0.073e24,3.475e6,0.363e9,0.406e9,27.3,655.7,6.68,moonT,moonText);
-  
+    
   cam = new PeasyCam(this,5000);
   cam.rotateX(-PI*3/8);
   cam.setMinimumDistance(200);
@@ -92,22 +93,36 @@ void setup(){
   planetInfo.setFont(font);
   planetInfo.setAutoDraw(false);
   
-  for(int i = 0; i < 10; i++){
+  for(int i = 0; i < solarSystem.length; i++){
     solarSystem[i].initialPosition();
   }
-  // Setup the ring of Saturn;
-  
+
+  // Setup the ring of Saturn
   solarSystem[6].ringSetup();
+  
+  // Setup asteroid belt
+  for(int i=0; i< asteroidBelt.length; i++){
+     asteroidBelt[i] = new Body(1,5*randomGaussian()*random(1e5,5e5),0.75*random(3.29e11,4.28e11));
+  }
+  for(int i=0; i< asteroidBelt.length; i++){
+     asteroidBelt[i].initialPosition();
+  }
 }
 
 void draw(){
   background(starBackground); 
   pointLight(255, 255, 255, 0, 0, 0); //for the normal behaviour of the sun light 
-  for(int i = 1; i < 10; i++){
+  for(int i = 1; i < solarSystem.length; i++){
     solarSystem[i].setPosition(timestep);
     solarSystem[i].display();
     solarSystem[i].displayOrbit();
   } 
+  
+  for(int i=0; i< asteroidBelt.length; i++){
+     asteroidBelt[i].setPosition(timestep);
+     asteroidBelt[i].display();
+  }
+  
   ambientLight(255, 255, 255, 0, 0, 0); //ambientLight in the center of the sun
   solarSystem[0].display();
   

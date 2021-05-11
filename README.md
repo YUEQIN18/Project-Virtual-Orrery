@@ -39,6 +39,7 @@ Press `0` camera will move to Moon
 
 Added rings of Saturn. It's really hard code.
 
+Added asteroid belt.
 
 
 ### [2021-05-10]

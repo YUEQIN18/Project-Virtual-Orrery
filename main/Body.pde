@@ -16,6 +16,32 @@ class Body {
     boolean info;
     String infoText;
     // constructor
+    Body(float m, float diam, float perihelion){
+        this.name = "a";
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
+        this.mass = m;
+        this.diam = diam;
+        this.perihelion = perihelion;
+        this.aphelion =  perihelion;
+        this.orbPeriod = 1;
+        this.rotationalPeriod = 1;
+        this.OrbitTilt = 1;
+        currentAngle = 1;
+        rotateAngle = 1;
+        info = false;
+        noStroke();
+        fill(150);
+        float type = random(1);
+        if(type > 0.4){
+          globe = createShape(RECT,0,0,diam/2/radiusLevel, diam/2/radiusLevel);
+        }else{
+          globe = createShape(SPHERE, diam/2/radiusLevel);
+        }
+
+        
+    }
     Body(String name, float x, float y, float m, float diam, float perihelion, float aphelion, float orbPeriod, float rotationalPeriod, float OrbitTilt,PImage img, String infoText){
         this.name = name;
         this.x = x;
@@ -48,8 +74,10 @@ class Body {
            translate(x/coordinateLevel/2,y/coordinateLevel/2,z/coordinateLevel/2);
         }else {
            translate(x/coordinateLevel,y/coordinateLevel,z/coordinateLevel);
-        }      
-        rot(timestep);
+        } 
+        if (name != "a"){
+          rot(timestep);
+        }   
         rotateX(-PI/2); // rotate each planet to right angle for rotation
         fill(255);
         shape(globe);
@@ -120,6 +148,8 @@ class Body {
           float angle = angularVelocity * time ; // Radian
           // Now we have the angle of planet movement
           // Next we calculate the position fo planet
+          //if(name =="a")
+          //println(angularVelocity); //8.4856886E-8
           currentAngle = currentAngle + angle;
           float a = (perihelion+aphelion)/2; // a is semi-major axis
           float c = a - perihelion;
@@ -129,6 +159,7 @@ class Body {
         }
 
     }
+    
     void displayOrbit(){
         float a = (perihelion+aphelion)/2; // a is semi-major axis
         float c = a - perihelion;
