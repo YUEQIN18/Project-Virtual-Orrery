@@ -54,6 +54,14 @@ Added instruction to README.md.
 
 ### [2021-05-09]
 
+#### Version: 1.1.5
+
+#### Contributor: William Baltus  
+
+Added "SpeedUp" and "SlowDown" buttons. Fixed and adjusted planet buttons + font. Refactored code to remove unused code. 
+
+### [2021-05-09]
+
 #### Version: 1.1
 
 #### Contributor: Yue Qin
