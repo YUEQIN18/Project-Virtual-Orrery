@@ -13,12 +13,13 @@ class Body {
     float rotateAngle;
     float OrbitTilt; //(degree)
     PShape globe;
-    boolean info;
+    boolean info; // turn on display information
+    boolean follow; // turn on camera following
     String infoText;
     float [] xpos;
     float [] ypos;
     PShape[] tails;
-    // constructor
+    // constructor for asteroid belt and comet with less input parameters.
     Body(String name,float m, float diam, float perihelion, float aphelion){
         this.name = name;
         this.x = 0;
@@ -37,7 +38,7 @@ class Body {
         noStroke();
         fill(150);
         
-        if(name =="a"){
+        if(name.equals("a")){
           float type = random(1);
           if(type > 0.4){
           globe = createShape(RECT,0,0,diam/2/radiusLevel, diam/2/radiusLevel);
@@ -46,23 +47,22 @@ class Body {
           globe = createShape(SPHERE, diam/2/radiusLevel);
         }
         }
-        if(name =="Halley's comet"){
+        if(name.equals("Halley's comet")){
           xpos = new float[100];
           ypos = new float[100];
           tails = new PShape[100];
           for(int i = 0; i < xpos.length; i++){
-            xpos[i] = 0;
-            ypos[i] = 0;
-            fill(50+2*i,50+2*i,100+1.5*i);
+            fill(50+2*i,50+2*i,100+1.5*i,i*2+50);
             sphereDetail(6);
             tails[i] = createShape(SPHERE, i*diam/2/radiusLevel/xpos.length);
           }
-          fill(150,150,250);
+          fill(tailColor);
           sphereDetail(24);
           globe = createShape(SPHERE, diam/2/radiusLevel);
         }
        
     }
+    // constructor for planets
     Body(String name, float x, float y, float m, float diam, float perihelion, float aphelion, float orbPeriod, float rotationalPeriod, float OrbitTilt,PImage img, String infoText){
         this.name = name;
         this.x = x;
@@ -88,52 +88,39 @@ class Body {
     void display(){
         pushMatrix();
         noStroke();
-        if (name == "Moon"){
-          translate(x/coordinateLevel,y/coordinateLevel,z/coordinateLevel);
-        }else if (perihelion > 2e12){
+        // The coordinates of some distant planets would shrink
+        if (perihelion > 2e12){
            translate(x/coordinateLevel/3,y/coordinateLevel/3,z/coordinateLevel/3);
         }else if (perihelion > 5e11){
            translate(x/coordinateLevel/2,y/coordinateLevel/2,z/coordinateLevel/2);
         }else {
            translate(x/coordinateLevel,y/coordinateLevel,z/coordinateLevel);
         } 
-        if (name != "a" && name != "Halley's comet"){
+        if (!name.equals( "a") && !name.equals("Halley's comet")){
           rot(timestep);
         }   
         rotateX(-PI/2); // rotate each planet to right angle for rotation
         fill(255);
         shape(globe);
         popMatrix();
-
+        if(follow == true){
+          camFollow();
+        }
     }
     
     void rot(float time){
     
     rotateY(OrbitTilt);
-    if(name != "Sun"){
+    if(!name.equals("Sun")){
       rotateZ(radians(rotateAngle));
     }
     rotateAngle = rotateAngle + time * 360/rotationalPeriod/3600;
-    if (name == "Saturn"){
-      shape(SaturnRings);
+    if (name.equals("Saturn")){
+      shape(saturnRings);
     }
     
   }
-    void displayInfo(){
-      if(info == true){
-          cam.beginHUD();   
-          fill(255, 140, 140, 100);     
-          rect(1800, 60, 660, 660);
-          fill(150);
-          textSize(40);
-          text(infoText, 1850, 160, 600,600);
-          cam.endHUD();
-      }
-    }
-    
-    void turnOnInfo(){
-      this.info = !this.info;
-    } 
+
     void initialPosition(){
         // set random x and y
         // Or we find the actual position of planet later
@@ -147,6 +134,10 @@ class Body {
         } else if (name == "Halley's comet"){
           x = a*cos(currentAngle)-c;
           y = b*sin(currentAngle);
+            for(int i =0 ; i < xpos.length ; i++){
+              xpos[i] = x;
+              ypos[i] = y;
+            }
         } else{
           x = a*cos(currentAngle);
           y = b*sin(currentAngle);
@@ -155,7 +146,7 @@ class Body {
     }
     void setPosition(float time){
 
-        if (name == "Moon"){
+        if (name.equals("Moon")){
           float angularVelocity = 2*PI/orbPeriod/24/3600;
           float angle = angularVelocity * time ; // 
           currentAngle = currentAngle + angle;
@@ -164,7 +155,7 @@ class Body {
           float b = sqrt(a*a-c*c); // b is semi-minor axis
           x = 50*a*cos(currentAngle) + solarSystem[3].x;
           y = 50*b*sin(currentAngle) + solarSystem[3].y;
-        }else if (name == "Halley's comet"){
+        }else if (name.equals("Halley's comet")){
           float dist = sqrt(x * x + y * y); // Distance between Sun and planet
           float G = 6.67e-11; // Gravitation instance
           float M = 1.9891e30; // Mass of Sun
@@ -200,7 +191,22 @@ class Body {
         }
 
     }
+    void displayInfo(){
+      if(info == true){
+          cam.beginHUD();   
+          fill(255, 140, 140, 100);     
+          rect(1800, 60, 660, 660);
+          fill(150);
+          textSize(40);
+          text(infoText, 1850, 160, 600,600);
+          cam.endHUD();
+          
+      }
+    }
     
+    void turnOnInfo(){
+      this.info = !this.info;
+    } 
     void displayOrbit(){
 
         float a = (perihelion+aphelion)/2; // a is semi-major axis
@@ -209,7 +215,7 @@ class Body {
         pushMatrix();
         stroke(50);
         noFill();
-        if(name == "Halley's comet"){
+        if(name.equals("Halley's comet")){
           translate(-c/coordinateLevel,0,0);
           ellipse(0,0,2*a/coordinateLevel,2*b/coordinateLevel);
         }
@@ -220,8 +226,7 @@ class Body {
         }else {
           ellipse(0,0,2*a/coordinateLevel,2*b/coordinateLevel);
         }
-
-        if (name == "Earth"){
+        if (name.equals("Earth")){
           float ma = (solarSystem[9].perihelion+solarSystem[9].aphelion)/2;
           float mc = ma - solarSystem[9].perihelion;
           float mb = sqrt(ma*ma-mc*mc);
@@ -229,7 +234,33 @@ class Body {
         }
         popMatrix();
     }
-
+  
+  void camFollow(){
+    int animationTime = 480; // millisecond
+    if(follow == true)
+      animationTime = 60;
+    for(int i = 0; i < solarSystem.length; i++){
+      solarSystem[i].info = false;
+    }
+    turnOnInfo();
+    if( perihelion > 2e12)
+      cam.lookAt(x/coordinateLevel/3, y/coordinateLevel/3, z/coordinateLevel/3,10,animationTime);
+    else if (perihelion > 5e11)
+      cam.lookAt(x/coordinateLevel/2, y/coordinateLevel/2, z/coordinateLevel/2,500,animationTime);
+    else if (name.equals("Sun"))
+      cam.reset();
+    else if (name.equals("Halley's comet"))
+      cam.lookAt(x/coordinateLevel, y/coordinateLevel, z/coordinateLevel,500,animationTime);
+    else
+      cam.lookAt(x/coordinateLevel, y/coordinateLevel, z/coordinateLevel,10,animationTime);
+  }
+  
+  void turnFollowOff(){
+    for(int i = 0; i < solarSystem.length; i++){
+      solarSystem[i].follow = false;
+    }
+  }
+  
   void cometTail(){
     
     for(int i =0 ; i < xpos.length-1 ; i++){
@@ -241,8 +272,8 @@ class Body {
     pushMatrix();
     noStroke();
     for(int i = 0; i < xpos.length; i++){
-      shape(tails[i],xpos[i]/coordinateLevel,ypos[i]/coordinateLevel); 
-    }
+      shape(tails[i],xpos[i]/coordinateLevel,ypos[i]/coordinateLevel);
+    }   
     popMatrix();
   }
 
@@ -261,7 +292,7 @@ class Body {
     color Ccolor = color(128,116,104,0.49*255); 
     color Dcolor = color(99,95,90,0.19*255); 
     noStroke();
-    SaturnRings = createShape(GROUP);
+    saturnRings = createShape(GROUP);
     PShape D = createShape();
     D.beginShape();             
     D.fill(Dcolor);           
@@ -318,9 +349,9 @@ class Body {
     A.bezierVertex((X-h*Ra2), Y+Ra2,Z,X-Ra2,(Y+h*Ra2),Z, X-Ra2, Y,Z);      //left-b 
     A.bezierVertex(X-Ra2, (Y-h *Ra2),Z,(X-h*Ra2), Y-Ra2,Z, X, Y-Ra2,Z);   //left-up
     A.endShape();
-    SaturnRings.addChild(D);
-    SaturnRings.addChild(C);
-    SaturnRings.addChild(B);
-    SaturnRings.addChild(A);
+    saturnRings.addChild(D);
+    saturnRings.addChild(C);
+    saturnRings.addChild(B);
+    saturnRings.addChild(A);
   }
 }

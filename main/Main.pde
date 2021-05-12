@@ -2,20 +2,23 @@ import peasy.*;
 import controlP5.*;
 import processing.opengl.*;
 
-PShape SaturnRings;
+PShape saturnRings;
 PImage starBackground,sunTexture,mercuryT,venusT,earthT,moonT,marsT,jupiterT,saturnT,saturnRingT,uranusT,neptuneT;
-String sunText, mercuryText, venusText, earthText,moonText, marsText, jupiterText, saturnText, uranusText, neptuneText,HalleyText;
+String sunText, mercuryText, venusText, earthText,moonText, marsText, jupiterText, saturnText, uranusText, neptuneText,halleyText;
 PeasyCam cam;
-ControlP5 time, timeslider, planetInfo;
+ControlP5 time, timeSlider, planetInfo, planetFollow;
 
 Body[] solarSystem = new Body[11];
 Body[] asteroidBelt = new Body[1666];
   
 int timestep = 5000;
+int maxTimeStep = 50000;
+int minTimeStep = 1000;
 int radiusLevel = 500000;
 int coordinateLevel = 200000000; //<>//
 boolean sliderOn = false;
 boolean orbitOn = true;
+color tailColor = color(150,150,250);
 
 void setup(){
   //size(2400,1200, P3D); //<>//
@@ -47,7 +50,7 @@ void setup(){
   saturnText= "Adorned with a dazzling, complex system of icy rings, Saturn is unique in our solar system. The other giant planets have rings, but none are as spectacular as Saturn's.";
   uranusText= "Uranus—seventh planet from the Sun—rotates at a nearly 90-degree angle from the plane of its orbit. This unique tilt makes Uranus appear to spin on its side.";
   neptuneText= "Neptune—the eighth and most distant major planet orbiting our Sun—is dark, cold and whipped by supersonic winds. It was the first planet located through mathematical calculations, rather than by telescope.";
-  HalleyText = "";
+  halleyText = "";
   
   solarSystem[0] = new Body("Sun",0,0,1.9891e30,1.391684e9/6,0,0,587.28,0,0,sunTexture,sunText);
   solarSystem[1] = new Body("Mercury",0,0,0.330e24,4.879e6,4.6e10,6.98e10,88,1407.6,0.03,mercuryT,mercuryText);
@@ -66,22 +69,23 @@ void setup(){
   cam.setMinimumDistance(200);
   cam.setMaximumDistance(8000);
   
-  time = new ControlP5(this);
-  //create button for user to adjust time scale --
-  //addButton(theName, theValue, theX, theY, theW, theH);
-  PFont p = createFont("Verdana", 20);
+  PFont p = createFont("Verdana", 20,true);
   ControlFont font = new ControlFont(p);
+  
+  // Actually, timeAdjuster and timeSlider do the same thing.
+  // we keep both of them because user will know what the number of timestep is 
+  // from timeSlider when you use that buttons
+  time = new ControlP5(this);
   time.setFont(font);
-  time.addButton("TimeAdjuster").setPosition(0,720).setSize(180,60);
-  time.addButton("slowDown").setValue(1000).setPosition(0,780).setSize(180,60).setId(1);
-  time.addButton("speedUp").setValue(1000).setPosition(0,840).setSize(180,60).setId(2);
+  time.addButton("timeAdjuster").setPosition(0,720).setSize(180,60);
+  time.addButton("slowDown").setValue(1000).setPosition(0,780).setSize(180,60);
+  time.addButton("speedUp").setValue(1000).setPosition(0,840).setSize(180,60);
   time.setAutoDraw(false);
-
-  timeslider = new ControlP5(this);
-  timeslider.setFont(font);
-  timeslider.addSlider("timestep").setPosition(180,720).setSize(360,60).setRange(100,50000).setValue(5000);
-  timeslider.setAutoDraw(false);
-
+  timeSlider = new ControlP5(this);
+  timeSlider.setFont(font);
+  timeSlider.addSlider("timestep").setPosition(180,720).setSize(360,60).setRange(minTimeStep,maxTimeStep).setValue(5000);
+  timeSlider.setAutoDraw(false);
+    
   planetInfo = new ControlP5(this);
   planetInfo.addButton("Sun").setPosition(0,60).setSize(180,60);
   planetInfo.addButton("Mercury").setPosition(0,120).setSize(180,60);
@@ -97,6 +101,21 @@ void setup(){
   planetInfo.addButton("TurnOnOrbit").setPosition(0,900).setSize(180,60);
   planetInfo.setFont(font);
   planetInfo.setAutoDraw(false);
+  
+  planetFollow = new ControlP5(this);
+  planetFollow.addButton("followSun").setPosition(180,60).setSize(180,60);
+  planetFollow.addButton("followMercury").setPosition(180,120).setSize(180,60);
+  planetFollow.addButton("followVenus").setPosition(180,180).setSize(180,60);
+  planetFollow.addButton("followEarth").setPosition(180,240).setSize(180,60);
+  planetFollow.addButton("followMars").setPosition(180,300).setSize(180,60);
+  planetFollow.addButton("followJupiter").setPosition(180,360).setSize(180,60);
+  planetFollow.addButton("followSaturn").setPosition(180,420).setSize(180,60);
+  planetFollow.addButton("followUranus").setPosition(180,480).setSize(180,60);
+  planetFollow.addButton("followNeptune").setPosition(180,540).setSize(180,60);
+  planetFollow.addButton("followMoon").setPosition(180,600).setSize(180,60);
+  planetFollow.addButton("followComet").setPosition(180,660).setSize(180,60);
+  planetFollow.setFont(font);
+  planetFollow.setAutoDraw(false);
   
   for(int i = 0; i < solarSystem.length; i++){
     solarSystem[i].initialPosition();
@@ -116,8 +135,8 @@ void setup(){
 
 void draw(){
   background(starBackground); 
-  pointLight(255, 255, 255, 0, 0, 0); //for the normal behaviour of the sun light 
-  pointLight(25, 25, 25, 0, 0, 0); 
+  pointLight(250, 250, 250, 0, 0, 0); //for the normal behaviour of the sun light 
+  ambientLight(50, 50, 50, 0, 0, 0); 
   for(int i = 1; i < solarSystem.length; i++){
     solarSystem[i].setPosition(timestep);
     solarSystem[i].display();
@@ -151,128 +170,133 @@ void draw(){
   text("Virtual Orrery", 40, 45);
   time.draw();
   planetInfo.draw();
+  planetFollow.draw();
   if(sliderOn == true){
-    timeslider.draw();
+    timeSlider.draw();
   }
   cam.endHUD();
   hint(ENABLE_DEPTH_TEST);
  }
  
-void TimeAdjuster() {
+void timeAdjuster() {
 
   sliderOn = !sliderOn;
   if (sliderOn == false)
     cam.setActive(true);
 }
 
-void timestep(){
+void timeScale(int t){
   if (mousePressed == true)
     cam.setActive(false);
+  timestep = t;
 }
 
 void speedUp(float theValue) {
-  if(timestep < 50000){
+  if(timestep < maxTimeStep)
     timestep = timestep + int(theValue);
-  }
+    // When uesr use the button, the value of the slider changes as well
+  //timeSlider.getController("timestep").setValue(timestep);
 }
 
 void slowDown(float theValue) {
-  if(timestep > 1000){
+  if(timestep > minTimeStep)
     timestep = timestep - int(theValue);
-  }
+    // When you use the button, the value of the slider changes as well
+  //timeSlider.getController("timestep").setValue(timestep);
+}
+
+void followSun(){
+  solarSystem[0].turnFollowOff();
+  solarSystem[0].follow = !solarSystem[0].follow;
+}
+void followMercury(){
+  solarSystem[1].turnFollowOff();
+  solarSystem[1].follow = !solarSystem[1].follow;
+}
+void followVenus(){
+  solarSystem[2].turnFollowOff();
+  solarSystem[2].follow = !solarSystem[2].follow;
+}
+void followEarth(){
+  solarSystem[3].turnFollowOff();
+  solarSystem[3].follow = !solarSystem[3].follow;
+}
+void followMars(){
+  solarSystem[4].turnFollowOff();
+  solarSystem[4].follow = !solarSystem[4].follow;
+}
+void followJupiter(){
+  solarSystem[5].turnFollowOff();
+  solarSystem[5].follow = !solarSystem[5].follow;
+}
+void followSaturn(){
+  solarSystem[6].turnFollowOff();
+  solarSystem[6].follow = !solarSystem[6].follow;
+}
+void followUranus(){
+  solarSystem[7].turnFollowOff();
+  solarSystem[7].follow = !solarSystem[7].follow;
+}
+void followNeptune(){
+  solarSystem[8].turnFollowOff();
+  solarSystem[8].follow = !solarSystem[8].follow;
+}
+void followMoon(){
+  solarSystem[9].turnFollowOff();
+  solarSystem[9].follow = !solarSystem[9].follow;
+}
+void followComet(){
+  solarSystem[10].turnFollowOff();
+  solarSystem[10].follow = !solarSystem[10].follow;
 }
 
 void Sun(){
-  cam.reset();
-  cam.lookAt(solarSystem[0].x/coordinateLevel, solarSystem[0].y/coordinateLevel, solarSystem[0].z/coordinateLevel,1000,600);
-  for(int i = 0; i < 10; i++){
-    solarSystem[i].info = false;
-  }
-  solarSystem[0].turnOnInfo();
+  solarSystem[0].turnFollowOff();
+  solarSystem[0].camFollow();
 }
-
 void Mercury(){
-  cam.lookAt(solarSystem[1].x/coordinateLevel, solarSystem[1].y/coordinateLevel, solarSystem[1].z/coordinateLevel,10,600);
-  timestep = 100;
-  for(int i = 0; i < 10; i++){
-    solarSystem[i].info = false;
-  }
-  solarSystem[1].turnOnInfo();
-}
- 
+  solarSystem[1].turnFollowOff();
+  solarSystem[1].camFollow();
+} 
 void Venus(){
-  cam.lookAt(solarSystem[2].x/coordinateLevel, solarSystem[2].y/coordinateLevel, solarSystem[2].z/coordinateLevel,10,600);
-  timestep = 100;
-  for(int i = 0; i < 10; i++){
-    solarSystem[i].info = false;
-  }
-  solarSystem[2].turnOnInfo();
+  solarSystem[2].turnFollowOff();
+  solarSystem[2].camFollow();
 }
 void Earth(){
-  cam.lookAt(solarSystem[3].x/coordinateLevel, solarSystem[3].y/coordinateLevel, solarSystem[3].z/coordinateLevel,10,600);
-  timestep = 100;
-  for(int i = 0; i < 10; i++){
-    solarSystem[i].info = false;
-  }
-  solarSystem[3].turnOnInfo();
+  solarSystem[3].turnFollowOff();
+  solarSystem[3].camFollow();
 }
 void Mars(){
-  cam.lookAt(solarSystem[4].x/coordinateLevel, solarSystem[4].y/coordinateLevel, solarSystem[4].z/coordinateLevel,10,600);
-  timestep = 100;
-  for(int i = 0; i < 10; i++){
-    solarSystem[i].info = false;
-  }
-  solarSystem[4].turnOnInfo();
+  solarSystem[4].turnFollowOff();
+  solarSystem[4].camFollow();
 }
 void Jupiter(){
-  cam.lookAt(solarSystem[5].x/coordinateLevel/2, solarSystem[5].y/coordinateLevel/2, solarSystem[5].z/coordinateLevel/2,500,600);
-  timestep = 100;
-  for(int i = 0; i < 10; i++){
-    solarSystem[i].info = false;
-  }
-  solarSystem[5].turnOnInfo();
+  solarSystem[5].turnFollowOff();
+  solarSystem[5].camFollow();
 }
 void Saturn(){
-  cam.lookAt(solarSystem[6].x/coordinateLevel/2, solarSystem[6].y/coordinateLevel/2, solarSystem[6].z/coordinateLevel/2,500,600);
-  timestep = 100;
-  for(int i = 0; i < 10; i++){
-    solarSystem[i].info = false;
-  }
-  solarSystem[6].turnOnInfo();
+  solarSystem[6].turnFollowOff();
+  solarSystem[6].camFollow();
 }
 void Uranus(){
-  cam.lookAt(solarSystem[7].x/coordinateLevel/3, solarSystem[7].y/coordinateLevel/3, solarSystem[7].z/coordinateLevel/3,10,600);
-  timestep = 100;
-  for(int i = 0; i < 10; i++){
-    solarSystem[i].info = false;
-  }
-  solarSystem[7].turnOnInfo();
+  solarSystem[7].turnFollowOff();
+  solarSystem[7].camFollow();
 }
 void Neptune(){
-  cam.lookAt(solarSystem[8].x/coordinateLevel/3, solarSystem[8].y/coordinateLevel/3, solarSystem[8].z/coordinateLevel/3,10,600);
-  timestep = 100;
-  for(int i = 0; i < 10; i++){
-    solarSystem[i].info = false;
-  }
-  solarSystem[8].turnOnInfo();
+  solarSystem[8].turnFollowOff();
+  solarSystem[8].camFollow();
 }
 void Moon(){
-  cam.lookAt(solarSystem[9].x/coordinateLevel, solarSystem[9].y/coordinateLevel, solarSystem[9].z/coordinateLevel,10,600);
-  timestep = 100;
-  for(int i = 0; i < 10; i++){
-    solarSystem[i].info = false;
-  }
-  solarSystem[9].turnOnInfo();
+  solarSystem[9].turnFollowOff();
+  solarSystem[9].camFollow();
 }
-
 void HalleyComet(){
-  cam.lookAt(solarSystem[10].x/coordinateLevel, solarSystem[10].y/coordinateLevel, solarSystem[10].z/coordinateLevel,10,600);
+  solarSystem[10].turnFollowOff();
+  solarSystem[10].camFollow();
 }
-
 void TurnOnOrbit(){
   orbitOn = !orbitOn;
 }
-
 void keyPressed() {
   if (key == '1') {
     Sun();

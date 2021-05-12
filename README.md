@@ -47,6 +47,15 @@ Press `slowDown` and then the solar system will move slower.
 
 Press `any of the HUD buttons` and the camera will move to that body.
 
+
+### [2021-05-12]
+
+#### Version: 1.4
+
+#### Contributor: Yue Qin
+
+Added buttons for following planets.
+
 ### [2021-05-11]
 
 #### Version: 1.3
