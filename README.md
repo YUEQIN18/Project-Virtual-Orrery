@@ -41,12 +41,6 @@ Press `any of the HUD buttons` and the camera will move to that body.
 
 
 
-Press `speedUp` and then the solar system will move faster.
-
-Press `slowDown` and then the solar system will move slower.
-
-Press `any of the HUD buttons` and the camera will move to that body.
-
 
 ### [2021-05-12]
 
@@ -62,7 +56,7 @@ Added buttons for following planets.
 
 #### Contributor: Yue Qin
 
-Added rings of Saturn. It's really hard code.
+Added rings of Saturn. 
 
 Added asteroid belt.
 
@@ -77,7 +71,7 @@ Time adjustment slider was return. Now the camera will no longer move while slid
 
 #### Contributor: Yue Qin
 
-The keyboard shortcuts were added back alongside the HUD buttons. 
+The keyboard shortcuts were return.
 
 Added instruction to README.md.
 
