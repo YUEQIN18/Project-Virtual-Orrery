@@ -276,7 +276,11 @@ class Body {
     }   
     popMatrix();
   }
-
+  
+  // draw rings of Saturn. There are 4 rings of Saturn, A, B, C, and D ring.
+  // For each ring, there are two radius, for example , Ra1 and Ra2 
+  // Ra1 is the inner radius of the ring, Ra2 is the outter radius.
+  // bezierVertex can draw a annulus
   void ringSetup(){
     final float h = 0.552284749831; 
     float Ra1 = 2.03*diam/2/radiusLevel;
