@@ -9,239 +9,43 @@
 main   : [Main.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/main/Main.pde) is the file to run. Needs to be in a folder named `Main.` 
 
 
-src    : source code
-
-### Instructions
-
-Press `1` and then the camera will move to Sun
-
-Press `2` and then the camera will move to Mercury
-
-Press `3` and then the camera will move to Venus
-
-Press `4` and then the camera will move to Earth
-
-Press `5` and then the camera will move to Mars
-
-Press `6` and then the camera will move to Jupiter
-
-Press `7` and then the camera will move to Saturn
-
-Press `8` and then the camera will move to Uranus
-
-Press `9` and then the camera will move to Neptune
-
-Press `0` and then the camera will move to Moon
-
-Press `speedUp` and then the solar system will move faster.
-
-Press `slowDown` and then the solar system will move slower. 
-
-Press `any of the HUD buttons` and the camera will move to that body. 
-
-
-### [2021-05-17]
-
-#### Version: 1.4.5
-
-#### Contributor: William Baltus
-
-Refactored code by removing unncessary class and some comments. Added executables. Tested and runs on machine.
-
-### [2021-05-12]
-
-#### Version: 1.4
-
-#### Contributor: Yue Qin
-
-Added buttons for following planets.
-
-### [2021-05-11]
-
-#### Version: 1.3
-
-#### Contributor: Yue Qin
-
-Added rings of Saturn. 
-
-Added asteroid belt.
-
-Added Halley's Comet. 
-
-Time adjustment slider was return. Now the camera will no longer move while sliding the slider.
-
-
-### [2021-05-10]
-
-#### Version: 1.2
-
-#### Contributor: Yue Qin
-
-The keyboard shortcuts were return.
-
-Added instruction to README.md.
-
-### [2021-05-09]
-
-#### Version: 1.1.5
-
-#### Contributor: William Baltus  
-
-Added "SpeedUp" and "SlowDown" buttons for timescale. Fixed and adjusted planet buttons + font. Refactored code to remove unused code.  
-
-Done using controlP5 library. 
-
-### [2021-05-09]
-
-#### Version: 1.1
-
-#### Contributor: Yue Qin
-
-Added `displayOrbit()` function, now you can see the orbits of each planet.
-
-Adjusted the distance between the planets, now you can see more planets. This also solves the problem of model clip.
-
-Changed default frame rate to 120 per second. That would aid in clarity and visualization capability. Also, the problem of shadow drag is alleviated.
-
-Added 4x anti-aliasing to program.
-
-Changed the sketch using the full size of the computer's display.
-
-Added clickable buttons for each planet and added a button to change the timescale.
-
-Added Moon.
-
-### [2021-05-04]
-
-#### Version: 1.0.8
-
-#### Contributor: Yue Qin
-
-Added HUD feature and camera movement shortcut key for presentation.
-
-    Press 1 camera will move to Sun
-    Press 2 camera will move to Mercury
-    Press 3 camera will move to Venus
-    Press 4 camera will move to Earth
-    Press 5 camera will move to Mars
-    Press 6 camera will move to Jupiter
-    Press 7 camera will move to Saturn
-    Press 8 camera will move to Uranus
-    Press 9 camera will move to Neptune
-
-Added a galaxy picture as background .
-
-Changed all textures of planets. New textures file come from https://www.solarsystemscope.com/textures/.
-
-Added `rot()` function to calculate each rotation of planet.
-
-### [2021-05-03]
-
-#### Version: 1.0.7
-
-#### Contributor: William Baltus
-
-Added lights such that it seems they are originating from sun object.  
-Added camera features. Can now move around solar system via zooming in and out, panning, and rotating. Can also reset back to default view. Working on clipping issue.
-Camera max and min distance set.
-Working on timescale manipulation + code for buttons. 
-
-### [2021-05-03]
-
-#### Version: 1.0.6
-
-#### Contributor: Yue Qin
-
-Added all picture to /main/data
-
-Modified [Main.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/main/Main.pde) and added textures to all celestial body, they look more real now.
-
-### [2021-05-02]
-
-#### Version: 1.0.5
-
-#### Contributor: Abhinandan Nuli
-
-added [2D_3D_Textures.pde] and [SolarSystem_2D_3D_Texture.pde].
-
-### [2021-04-29]
-
-#### Version: 1.0.4
-
-#### Contributor: Yue Qin
-
-updated [Body.java](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/src/Body.java) with Function `setPosition()`. Implemented this function base on Newton' s Gravitation Law.
-
-    public void setPosition(double time){
-        ...
-    }
-
-Added [Body.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/main/Body.pde) (converted from body.java). This file quotes code from [Planet.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/src/Planet.pde).
-
-Modified [Main.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/main/Main.pde) and It can show a moving 3D solar system now!!!
-
-### [2021-04-26]
-
-#### Version: 1.0.3
-
-#### Contributor: William Baltus
-
-Added [Star.pde]  
-Added [Field_of_Stars.pde]  
-Added [Main.pde]  
-Added [Planet.pde]
-
-Light manipulation, time scale manipulation, and planetary motion perfecting implementation is next!
-
-#### Contributor: Abhinandan Ashok Nuli
-
-Added StarField
-
-Added 2D objects
-
-Added 3D objects
-
-Added 3D textures
-
-
-### [2021-04-20]
-
-#### Version: 1.0.2
-
-#### Contributor: William Baltus
-
-Created 3D space.
-Added Star background to space.
-
-
-### [2021-04-17] 
-
-#### Version: 1.0.1
-
-#### Contributor: Yue Qin
-
-Added [Body.java](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/src/Body.java) with base parameters and its constructors.
-
-    public Body(){
-        ...
-    }
-
-Added a function to initialize position of planets.
-        
-    public void initialPosition(){
-        ...
-    }
-
-Added [SolarSystem.java](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/src/SolarSystem.java) and its constructor. Initialize eight planets
-of parameters from https://nssdc.gsfc.nasa.gov/planetary/factsheet/index.html
-
-    public SolarSystem(){
-        ...
-    }
-
-
-
-
+William Baltus                              	                                                        	        	EE-552
+Yue Qin      	
+Abhinandan Nuli
+ 
+Virtual Orrery
+Goals:
+        	The goal of the project was to simulate the solar system in a way it would be like an physical orrery, substituting the gears and cogs for CPU and code. There were many requirements for the project, which were the following:
+-        Have the simulation be in “2D” and then in “3D.”
+-        Have the Sun and recognized planets be a part of the simulation.
+-        Have an interface for the user to change the time scale of the project.
+-        Have a functioning camera such that the user can zoom, rotate, and pan.
+-        Have the celestial bodies take the path of a mathematically accepted formula (in our case, we used the Law of Universal Gravitation).
+There were additional features that were recommended such as:
+-        Having an asteroid field.
+
+-     Having moons around some celestial bodies. 
+-        Having an info message show up on celestial body observation.
+-     Having a Star Field that simulates the moving stars in the background.
+-     Having textures around all the celestial bodies.
+On top of all of these, classmate/professor feedback combined with our own aspirations resulted in the desire to add the following features:
+-        Having an interface where the user can directly observe a chosen celestial body
+-     Changed the textures to make them appear even more realistic.
+-        Adding a ring around Saturn.       	
+-        Fixing camera clipping.
+-        Adding orbit path lines.
+ 
+Details:
+These goals were all achieved. This was done using the Processing language. In this case, java-like syntax knowledge combined with the power of Processing can be leveraged to create code with a visual display. The code can be grouped into a few categories, those being “lighting,” “camera,” “buttons,” and “body.”
+In lighting, in order to project the light such that it seems as if it originates from the Sun, “pointLight” is used before all the planets are drawn. Afterwards “ambientLight” is used before the sun is drawn. This allows for the desired lighting.
+In camera, we utilized a library called Peasycam. This allowed us to essentially use a fully functional camera just by initializing it. Of course, then it had to be tweaked for our purposes, such as by setting certain key parameters like max/min zoom distance and adjusting its clipping.
+In buttons, we utilized a library called P5Control which allows us to place functional buttons easily in 3D space and within the camera HUD. Once initialized plenty of these objects could be created for our purposes. In our case, we used them to make the interface for the user to observe a planet (which also utilized Peasycam). We also used P5Control to make the interface for the user to adjust the time scale of the rotations and orbits of the bodies.
+Last but certainly not least, Body, was the bulk of the project. This was our group’s custom class which acted as the blueprint for any celestial body we added into the 3D space. It took in parameters such as the body name, diameter, perihelion, and so on. The Body class also has methods such as setPosition which use the object parameters as arguments to input into the Law of Universal Gravitation. Another neat method the Body class possesses is ringSetup which is used to draw the rings around Saturn. When these bodies are made en masse and placed into an array of Body objects, then an entire solar system can be easily made by making all the planet bodies and many asteroid bodies!
+Instructions for Running:
+ 
+Please visit Github to download all the required code.
+LINK: https://github.com/YUEQIN18/Project-Virtual-Orrery.git
+In order to run after downloading, simply go to the main folder and open up Main.pde.
 
 
 
