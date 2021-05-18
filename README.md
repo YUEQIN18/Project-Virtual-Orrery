@@ -40,7 +40,13 @@ Press `slowDown` and then the solar system will move slower.
 Press `any of the HUD buttons` and the camera will move to that body. 
 
 
+### [2021-05-17]
 
+#### Version: 1.4.5
+
+#### Contributor: William Baltus
+
+Refactored code by removing unncessary class and some comments. Added executables. Tested and runs on machine.
 
 ### [2021-05-12]
 
