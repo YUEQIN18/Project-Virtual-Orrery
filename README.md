@@ -11,8 +11,10 @@ EE-552
 main   : [Main.pde](https://github.com/YUEQIN18/Project-Virtual-Orrery/tree/master/main/Main.pde) is the file to run. Needs to be in a folder named `Main.` 
 
 
-William Baltus                              	                                                        	        	
+William Baltus
+
 Yue Qin      	
+
 Abhinandan Nuli
  
 Virtual Orrery
